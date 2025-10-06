@@ -1,0 +1,362 @@
+/* ===== PÁGINA INICIAL ===== */
+.pagina-inicial {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 0;
+  margin-bottom: 80px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.hero-content {
+  flex: 1;
+  padding: 40px;
+}
+
+.hero-content h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #107594;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #107594 0%, #0a5b64 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(16, 117, 148, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(16, 117, 148, 0.4);
+}
+
+.btn-secondary {
+  background: white;
+  color: #107594;
+  border: 2px solid #107594;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #107594;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.hero-image {
+  flex: 0 0 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.massage-icon {
+  font-size: 200px;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Seção de Serviços */
+.servicos-section {
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.servicos-section h2 {
+  font-size: 2.5rem;
+  color: #107594;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.servico-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.servico-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.servico-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.servico-card h3 {
+  font-size: 1.4rem;
+  color: #107594;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.servico-card p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Seção de Benefícios */
+.beneficios-section {
+  background: linear-gradient(135deg, #107594 0%, #0a5b64 100%);
+  color: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  margin-bottom: 80px;
+}
+
+/* Força todos os textos da seção de benefícios para branco */
+.beneficios-section * {
+  color: white !important;
+}
+
+.beneficios-content h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 50px;
+  font-weight: 700;
+  color: white;
+}
+
+.beneficios-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.beneficio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.beneficio-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.beneficio-item h4 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: white !important;
+}
+
+.beneficio-item p {
+  line-height: 1.6;
+  opacity: 1;
+  color: white !important;
+}
+
+/* Seção de Depoimentos */
+.depoimentos-section {
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.depoimentos-section h2 {
+  font-size: 2.5rem;
+  color: #107594;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.depoimentos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.depoimento-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-left: 5px solid #107594;
+  transition: all 0.3s ease;
+}
+
+.depoimento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+.depoimento-texto {
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.depoimento-autor {
+  font-weight: 600;
+  color: #107594;
+  font-size: 1rem;
+}
+
+/* Call to Action */
+.cta-section {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  text-align: center;
+  padding: 60px 40px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 1;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-cta {
+  background: white;
+  color: #28a745;
+  border: none;
+  padding: 18px 40px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+  background: #f8f9fa;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-image {
+    margin-top: 30px;
+  }
+  
+  .massage-icon {
+    font-size: 150px;
+  }
+  
+  .hero-buttons {
+    justify-content: center;
+  }
+  
+  .servicos-section h2,
+  .beneficios-content h2,
+  .depoimentos-section h2,
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+  
+  .beneficios-section,
+  .cta-section {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 20px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .btn-primary,
+  .btn-secondary,
+  .btn-cta {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+  
+  .servico-card,
+  .beneficio-item,
+  .depoimento-card {
+    padding: 25px 20px;
+  }
+}

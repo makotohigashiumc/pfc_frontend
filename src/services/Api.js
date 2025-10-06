@@ -1,58 +1,91 @@
 // src/services/api.js
+// Arquivo de serviços para comunicação com a API do backend
+// Centraliza todas as chamadas HTTP para manter consistência e facilitar manutenção
 
+// URL base da API - configurada para desenvolvimento local
 const API_BASE = "http://localhost:5000/api";
 
-// Login do cliente
+// ================================
+// FUNÇÕES DE AUTENTICAÇÃO
+// ================================
+
+// Função para login do cliente
+// Recebe: email e senha do cliente
+// Retorna: dados do usuário e token JWT se bem-sucedido
 export async function loginCliente(email, senha) {
   const resp = await fetch(`${API_BASE}/clientes/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, senha }),
+    headers: { "Content-Type": "application/json" }, // Define que está enviando JSON
+    body: JSON.stringify({ email, senha }), // Converte dados para JSON
   });
+  
+  // Se resposta não é ok, lança erro
   if (!resp.ok) throw new Error("Login falhou");
+  
+  // Retorna dados parseados do JSON
   return resp.json();
 }
 
-// Login do massoterapeuta
+// Função para login do massoterapeuta
+// Recebe: email e senha do massoterapeuta
+// Retorna: dados do usuário e token JWT se bem-sucedido
 export async function loginMassoterapeuta(email, senha) {
   const resp = await fetch(`${API_BASE}/massoterapeutas/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, senha }),
   });
+  
   if (!resp.ok) throw new Error("Login falhou");
   return resp.json();
 }
 
-// Cadastro de cliente
+// ================================
+// FUNÇÕES DE CADASTRO
+// ================================
+
+// Função para cadastro de cliente
+// Recebe: objeto com dados do cliente (nome, email, senha, etc.)
+// Retorna: confirmação de cadastro
 export async function cadastrarCliente(dados) {
   const resp = await fetch(`${API_BASE}/clientes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dados),
+    body: JSON.stringify(dados), // Envia todos os dados do cliente
   });
+  
   if (!resp.ok) throw new Error("Cadastro falhou");
   return resp.json();
 }
 
-// Recuperação de senha
+// ================================
+// FUNÇÕES DE RECUPERAÇÃO DE SENHA
+// ================================
+
+// Função para solicitar recuperação de senha
+// Recebe: email do cliente
+// Retorna: confirmação de envio do email
 export async function recuperarSenha(email) {
   const resp = await fetch(`${API_BASE}/clientes/recuperar-senha`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email }), // Envia apenas o email
   });
+  
   if (!resp.ok) throw new Error("Erro ao solicitar recuperação de senha");
   return resp.json();
 }
 
-// Redefinição de senha
+// Função para redefinir senha usando token
+// Recebe: token de recuperação e nova senha
+// Retorna: confirmação de redefinição
 export async function redefinirSenha(token, nova_senha) {
   const resp = await fetch(`${API_BASE}/clientes/redefinir-senha`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token, nova_senha }),
+    body: JSON.stringify({ token, nova_senha }), // Envia token e nova senha
   });
+  
   if (!resp.ok) throw new Error("Erro ao redefinir senha");
   return resp.json();
 }
