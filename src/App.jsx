@@ -50,6 +50,8 @@ function App() {
     localStorage.removeItem("token");
     // Remove os dados do usuário do armazenamento local
     localStorage.removeItem("usuario");
+    // Força o recarregamento da página para garantir reset completo do estado
+    window.location.reload();
   };
 
   // Renderização do componente principal
