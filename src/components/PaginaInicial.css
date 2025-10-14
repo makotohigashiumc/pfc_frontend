@@ -360,3 +360,353 @@
     padding: 25px 20px;
   }
 }
+
+/* ===== ESTILOS PARA FORMULÁRIO DE CONTATO ===== */
+
+/* Container do formulário de contato */
+.contato-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Cabeçalho da página de contato */
+.contato-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contato-header h1 {
+  font-size: 2.8rem;
+  color: #107594;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.contato-header p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Layout principal do conteúdo */
+.contato-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+/* Seção de informações de contato */
+.contato-info h2 {
+  font-size: 2rem;
+  color: #107594;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.contato-info > p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* Item individual de contato */
+.contato-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid #107594;
+}
+
+.contato-icone {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  margin-top: 5px;
+}
+
+.contato-detalhes h3 {
+  font-size: 1.3rem;
+  color: #107594;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.contato-detalhes a {
+  color: #107594;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contato-detalhes a:hover {
+  color: #0a5b64;
+  text-decoration: underline;
+}
+
+.contato-detalhes p {
+  color: #666;
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+}
+
+/* Seção do formulário */
+.contato-formulario h2 {
+  font-size: 2rem;
+  color: #107594;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Mensagens de feedback */
+.message {
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Formulário de contato */
+.formulario-contato {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #107594;
+  box-shadow: 0 0 0 3px rgba(16, 117, 148, 0.1);
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Botão de envio */
+.btn-enviar {
+  background: linear-gradient(135deg, #107594 0%, #0a5b64 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-enviar:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0a5b64 0%, #107594 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(16, 117, 148, 0.3);
+}
+
+.btn-enviar:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Seções adicionais */
+.contato-mapa,
+.contato-horarios {
+  margin-bottom: 50px;
+}
+
+.contato-mapa h2,
+.contato-horarios h2 {
+  font-size: 2rem;
+  color: #107594;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mapa-placeholder {
+  background: #f8f9fa;
+  padding: 60px 40px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px dashed #e0e0e0;
+}
+
+.mapa-placeholder p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+/* Grid de horários */
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.horario-item {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  border-left: 4px solid #107594;
+}
+
+.horario-item .dia {
+  display: block;
+  font-weight: 600;
+  color: #107594;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.horario-item .hora {
+  display: block;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .contato-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .contato-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .contato-item {
+    padding: 15px;
+  }
+  
+  .horarios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mapa-placeholder {
+    padding: 40px 20px;
+  }
+}
+
+/* ===== ESTILOS PARA FORMULÁRIO DE CONTATO ===== */
+
+/* Mensagens de feedback */
+.message {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-left: 4px solid;
+  animation: slideInDown 0.3s ease-out;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left-color: #28a745;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left-color: #dc3545;
+}
+
+/* Animação para as mensagens */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos para formulário desabilitado */
+.formulario-contato input:disabled,
+.formulario-contato select:disabled,
+.formulario-contato textarea:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-enviar:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

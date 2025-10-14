@@ -72,7 +72,7 @@ function Main({ usuario, login, logout }) {
           onClick={() => {
             // Lógica de navegação baseada no tipo de usuário
             if (!usuario) setSecaoAtual(""); // Página inicial pública se não logado
-            else if (tipoUsuario === "cliente") setSecaoAtual("perfil"); // Cliente vai para perfil
+            else if (tipoUsuario === "cliente") setSecaoAtual("inicio"); // Cliente vai para página inicial personalizada
             else if (tipoUsuario === "massoterapeuta") setSecaoAtual("agendamentos"); // Massoterapeuta vai para agendamentos
           }}
         >
@@ -98,6 +98,24 @@ function Main({ usuario, login, logout }) {
           {/* Menu específico para clientes logados */}
           {usuario && tipoUsuario === "cliente" && (
             <>
+              {/* Link para página inicial - mantém acesso às informações públicas */}
+              <a 
+                onClick={() => setSecaoAtual("inicio")}
+              >
+                🏠 Início
+              </a>
+              {/* Link para especialidades - mantém acesso às informações de serviços */}
+              <a 
+                onClick={() => setSecaoAtual("especialidades")}
+              >
+                ⚕️ Especialidades
+              </a>
+              {/* Link para contato - mantém acesso ao formulário de contato */}
+              <a 
+                onClick={() => setSecaoAtual("contato")}
+              >
+                📞 Contato
+              </a>
               {/* Link para agendamentos do cliente */}
               <a 
                 onClick={() => setSecaoAtual("agendamentos")}
@@ -221,6 +239,12 @@ function Main({ usuario, login, logout }) {
             
             {/* Página inicial - mostrada quando nenhuma seção está selecionada e usuário não está logado */}
             {secaoAtual === "" && !usuario && <PaginaInicial />}
+            
+            {/* Página inicial personalizada para cliente logado */}
+            {secaoAtual === "inicio" && tipoUsuario === "cliente" && <PaginaInicial />}
+            
+            {/* Página padrão para cliente logado (quando secaoAtual está vazia) */}
+            {secaoAtual === "" && tipoUsuario === "cliente" && <PaginaInicial />}
           </>
         )}
       </main>

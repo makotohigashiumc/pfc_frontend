@@ -1,9 +1,70 @@
 // Importação do React
-import React from "react";
+import React, { useState } from "react";
+import { enviarMensagemContato } from "../services/Api";
+import "./PaginaInicial.css"; // Importa estilos CSS
 
 // Componente de página de contato
 // Exibe informações de contato, formulário e detalhes da clínica
 function Contato() {
+  // ===== ESTADOS DO FORMULÁRIO =====
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    telefone: "",
+    assunto: "",
+    mensagem: ""
+  });
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "success" ou "error"
+
+  // ===== FUNÇÃO PARA ATUALIZAR CAMPOS =====
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // ===== FUNÇÃO PARA ENVIAR FORMULÁRIO =====
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      // Validação básica no front-end
+      if (!formData.nome.trim() || !formData.email.trim() || 
+          !formData.assunto.trim() || !formData.mensagem.trim()) {
+        throw new Error("Por favor, preencha todos os campos obrigatórios.");
+      }
+
+      // Envia dados para a API
+      const response = await enviarMensagemContato(formData);
+      
+      // Sucesso
+      setMessage(response.mensagem);
+      setMessageType("success");
+      
+      // Limpa o formulário
+      setFormData({
+        nome: "",
+        email: "",
+        telefone: "",
+        assunto: "",
+        mensagem: ""
+      });
+
+    } catch (error) {
+      // Erro
+      setMessage(error.message);
+      setMessageType("error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="contato-container">
       {/* Cabeçalho da página de contato */}
@@ -67,30 +128,68 @@ function Contato() {
         {/* Seção do formulário de contato */}
         <div className="contato-formulario">
           <h2>Envie uma Mensagem</h2>
-          {/* Formulário para envio de mensagens (atualmente apenas front-end) */}
-          <form className="formulario-contato">
+          
+          {/* Mensagem de feedback */}
+          {message && (
+            <div className={`message ${messageType}`}>
+              {message}
+            </div>
+          )}
+          
+          {/* Formulário para envio de mensagens */}
+          <form className="formulario-contato" onSubmit={handleSubmit}>
             {/* Campo Nome */}
             <div className="form-group">
               <label htmlFor="nome">Nome Completo</label>
-              <input type="text" id="nome" name="nome" required />
+              <input 
+                type="text" 
+                id="nome" 
+                name="nome" 
+                value={formData.nome}
+                onChange={handleChange}
+                required 
+                disabled={isLoading}
+              />
             </div>
             
             {/* Campo Email */}
             <div className="form-group">
               <label htmlFor="email">E-mail</label>
-              <input type="email" id="email" name="email" required />
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                value={formData.email}
+                onChange={handleChange}
+                required 
+                disabled={isLoading}
+              />
             </div>
             
             {/* Campo Telefone (opcional) */}
             <div className="form-group">
               <label htmlFor="telefone">Telefone</label>
-              <input type="tel" id="telefone" name="telefone" />
+              <input 
+                type="tel" 
+                id="telefone" 
+                name="telefone" 
+                value={formData.telefone}
+                onChange={handleChange}
+                disabled={isLoading}
+              />
             </div>
             
             {/* Seletor de Assunto */}
             <div className="form-group">
               <label htmlFor="assunto">Assunto</label>
-              <select id="assunto" name="assunto" required>
+              <select 
+                id="assunto" 
+                name="assunto" 
+                value={formData.assunto}
+                onChange={handleChange}
+                required
+                disabled={isLoading}
+              >
                 <option value="">Selecione um assunto</option>
                 <option value="agendamento">Dúvidas sobre Agendamento</option>
                 <option value="tratamentos">Informações sobre Tratamentos</option>
@@ -108,13 +207,20 @@ function Contato() {
                 name="mensagem" 
                 rows="5" 
                 placeholder="Descreva sua dúvida ou solicitação..."
+                value={formData.mensagem}
+                onChange={handleChange}
                 required
+                disabled={isLoading}
               ></textarea>
             </div>
             
             {/* Botão de envio */}
-            <button type="submit" className="btn-enviar">
-              Enviar Mensagem
+            <button 
+              type="submit" 
+              className="btn-enviar"
+              disabled={isLoading}
+            >
+              {isLoading ? "Enviando..." : "Enviar Mensagem"}
             </button>
           </form>
         </div>

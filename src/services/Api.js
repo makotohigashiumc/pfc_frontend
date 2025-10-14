@@ -89,3 +89,25 @@ export async function redefinirSenha(token, nova_senha) {
   if (!resp.ok) throw new Error("Erro ao redefinir senha");
   return resp.json();
 }
+
+// ================================
+// FUNÇÕES DE CONTATO
+// ================================
+
+// Função para enviar mensagem do formulário de contato
+// Recebe: objeto com dados do formulário (nome, email, telefone, assunto, mensagem)
+// Retorna: confirmação de envio
+export async function enviarMensagemContato(dados) {
+  const resp = await fetch(`${API_BASE}/contato`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados), // Envia todos os dados do formulário
+  });
+  
+  if (!resp.ok) {
+    const errorData = await resp.json();
+    throw new Error(errorData.erro || "Erro ao enviar mensagem");
+  }
+  
+  return resp.json();
+}
