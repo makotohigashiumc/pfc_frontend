@@ -226,16 +226,6 @@ function Contato() {
         </div>
       </div>
 
-      {/* Seção do mapa de localização */}
-      <div className="contato-mapa">
-        <h2>Nossa Localização</h2>
-        {/* Placeholder para mapa (pode ser integrado com Google Maps posteriormente) */}
-        <div className="mapa-placeholder">
-          <p>🗺️ Mapa da localização da clínica</p>
-          <p>Estamos localizados em uma região de fácil acesso, com estacionamento disponível.</p>
-        </div>
-      </div>
-
       {/* Seção de horários de funcionamento */}
       <div className="contato-horarios">
         <h2>Horários de Funcionamento</h2>
