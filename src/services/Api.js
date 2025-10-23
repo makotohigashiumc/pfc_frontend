@@ -3,7 +3,7 @@
 // Centraliza todas as chamadas HTTP para manter consistência e facilitar manutenção
 
 // URL base da API - configurada para desenvolvimento local
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 // ================================
 // FUNÇÕES DE AUTENTICAÇÃO
