@@ -162,6 +162,7 @@ function CadastroForm({ voltarLogin }) {
         </label>
 
         {/* Campo de senha com botão de mostrar/ocultar */}
+
         <label style={{ position: 'relative', display: 'block' }}>
           Senha:
           <div style={{ position: 'relative' }}>
@@ -210,9 +211,9 @@ function CadastroForm({ voltarLogin }) {
               {mostrarSenha ? '🙈' : '👁️'}
             </button>
           </div>
-      </label>
-        {/* Aviso de requisitos de senha */}
-        <div style={{ color: '#d32f2f', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
+        </label>
+        {/* Aviso de requisitos de senha abaixo do campo, visual mais discreto */}
+        <div style={{ color: '#ff9800', fontSize: '0.92rem', marginTop: '0.2rem', marginBottom: '0.7rem', textAlign: 'left', fontWeight: 500 }}>
           A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.
         </div>
      
