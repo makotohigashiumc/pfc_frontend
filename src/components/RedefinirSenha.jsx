@@ -2,10 +2,9 @@
 import React, { useState } from "react";
 import { redefinirSenha } from "../services/Api";
 
+function RedefinirSenha({ token, onRedefinido }) {
   // Log para verificar o token recebido
   console.log("Token recebido no RedefinirSenha:", token);
-
-function RedefinirSenha({ token, onRedefinido }) {
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmar, setConfirmar] = useState("");
   const [mostrarNova, setMostrarNova] = useState(false);
