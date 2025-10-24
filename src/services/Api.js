@@ -3,6 +3,7 @@
 // Centraliza todas as chamadas HTTP para manter consistência e facilitar manutenção
 
 // URL base da API - configurada para desenvolvimento local
+console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 // ================================
