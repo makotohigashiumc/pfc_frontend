@@ -16,7 +16,7 @@ function ContaCliente() {
           return;
         }
 
-        const resp = await fetch("http://localhost:5000/api/clientes/me", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

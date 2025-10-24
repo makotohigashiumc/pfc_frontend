@@ -37,7 +37,7 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
 
     try {
       // Faz requisição POST para o backend com as credenciais
-      const resp = await fetch("http://localhost:5000" + endpoint, {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" }, // Define que está enviando JSON
         body: JSON.stringify({ email, senha }), // Converte dados para JSON

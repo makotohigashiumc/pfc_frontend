@@ -16,7 +16,7 @@ function ContaMassoterapeuta() {
           return;
         }
 
-        const resp = await fetch("http://localhost:5000/api/massoterapeuta/me", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

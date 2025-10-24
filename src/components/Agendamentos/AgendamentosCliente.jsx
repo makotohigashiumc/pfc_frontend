@@ -134,7 +134,7 @@ function AgendamentosCliente({ usuario, token }) {
     
     try {
       // Faz requisição para obter horários ocupados do massoterapeuta
-      const resp = await fetch(`http://localhost:5000/api/massoterapeuta/horarios_ocupados/${massoterapeutaSelecionado}`, {
+  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/massoterapeuta/horarios_ocupados/${massoterapeutaSelecionado}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${authToken}` },
       });
@@ -181,7 +181,7 @@ function AgendamentosCliente({ usuario, token }) {
 
     const fetchHistorico = async () => {
       try {
-        const resp = await fetch("http://localhost:5000/api/clientes/agendamentos", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
           method: "GET",
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -206,7 +206,7 @@ function AgendamentosCliente({ usuario, token }) {
   useEffect(() => {
     const fetchMassoterapeutas = async () => {
       try {
-        const resp = await fetch("http://localhost:5000/api/massoterapeuta/lista");
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/lista");
         if (resp.ok) {
           const data = await resp.json();
           setMassoterapeutas(data);
@@ -221,7 +221,7 @@ function AgendamentosCliente({ usuario, token }) {
   async function limparHistorico() {
     if (!window.confirm("Tem certeza que deseja limpar todo o histórico de agendamentos?")) return;
     try {
-      const resp = await fetch("http://localhost:5000/api/clientes/agendamentos/limpar", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos/limpar", {
         method: "POST",
         headers: { Authorization: `Bearer ${authToken}` },
       });
@@ -261,7 +261,7 @@ function AgendamentosCliente({ usuario, token }) {
   const dataFormatada = `${dataHora.getFullYear()}-${pad(dataHora.getMonth()+1)}-${pad(dataHora.getDate())}T${pad(dataHora.getHours())}:${pad(dataHora.getMinutes())}`;
 
     try {
-      const resp = await fetch("http://localhost:5000/api/clientes/agendamentos", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -280,7 +280,7 @@ function AgendamentosCliente({ usuario, token }) {
         setSintomas("");
 
         // Atualiza histórico
-        const historicoResp = await fetch("http://localhost:5000/api/clientes/agendamentos", {
+  const historicoResp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
           method: "GET",
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -301,14 +301,14 @@ function AgendamentosCliente({ usuario, token }) {
     const authToken = token || usuario?.token || localStorage.getItem("token");
     if (!window.confirm("Tem certeza que deseja cancelar este agendamento?")) return;
     try {
-      const resp = await fetch(`http://localhost:5000/api/clientes/agendamentos/${id}/cancelar`, {
+  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/clientes/agendamentos/${id}/cancelar`, {
         method: "POST",
         headers: { Authorization: `Bearer ${authToken}` },
       });
       if (resp.ok) {
         alert("Agendamento cancelado com sucesso!");
         // Atualiza histórico
-        const historicoResp = await fetch("http://localhost:5000/api/clientes/agendamentos", {
+  const historicoResp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
           method: "GET",
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -328,7 +328,7 @@ function AgendamentosCliente({ usuario, token }) {
     const authToken = token || usuario?.token || localStorage.getItem("token");
     if (!window.confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível.")) return;
     try {
-      const resp = await fetch("http://localhost:5000/api/clientes", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes", {
         method: "DELETE",
         headers: { Authorization: `Bearer ${authToken}` },
       });

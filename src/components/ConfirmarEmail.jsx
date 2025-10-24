@@ -21,7 +21,7 @@ function ConfirmarEmail({ voltarLogin }) {
     }
     
     // Faz requisição ao backend para confirmar o email usando o token
-    fetch(`http://localhost:5000/api/clientes/confirmar-email/${token}`, {
+  fetch(`${import.meta.env.VITE_API_BASE_URL}/clientes/confirmar-email/${token}`, {
       method: "POST" // Método POST para confirmar email
     })
       .then(async (resp) => {

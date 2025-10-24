@@ -17,7 +17,7 @@ function PerfilCliente({ usuario, token }) {
 
     setLoading(true);
     try {
-      const resp = await fetch("http://localhost:5000/api/clientes", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ function PerfilCliente({ usuario, token }) {
     if (!window.confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível.")) return;
     
     try {
-      const resp = await fetch("http://localhost:5000/api/clientes", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes", {
         method: "DELETE",
         headers: { Authorization: `Bearer ${authToken}` },
       });

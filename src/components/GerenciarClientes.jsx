@@ -22,7 +22,7 @@ function GerenciarClientes({ usuario, token }) {
   const buscarClientes = async () => {
     setLoadingClientes(true);
     try {
-      const resp = await fetch("http://localhost:5000/api/massoterapeuta/clientes", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/clientes", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -50,7 +50,7 @@ function GerenciarClientes({ usuario, token }) {
     }
 
     try {
-      const resp = await fetch(`http://localhost:5000/api/massoterapeuta/clientes/${clienteId}`, {
+  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/massoterapeuta/clientes/${clienteId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

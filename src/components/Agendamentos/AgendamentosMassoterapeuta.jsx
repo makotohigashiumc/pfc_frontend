@@ -35,13 +35,13 @@ function AgendamentosMassoterapeuta({ usuario }) {
       setLoading(true);
       
       // Buscar agendamentos pendentes
-      const respPendentes = await fetch("http://localhost:5000/api/massoterapeuta/agendamentos/pendentes", {
+  const respPendentes = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/agendamentos/pendentes", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
 
       // Buscar agendamentos confirmados
-      const respConfirmados = await fetch("http://localhost:5000/api/massoterapeuta/agendamentos/confirmados", {
+  const respConfirmados = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/agendamentos/confirmados", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -78,7 +78,7 @@ function AgendamentosMassoterapeuta({ usuario }) {
 
     try {
       setBuscando(true);
-      const resp = await fetch(`http://localhost:5000/api/massoterapeuta/buscar-paciente?nome=${encodeURIComponent(busca)}`, {
+  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/massoterapeuta/buscar-paciente?nome=${encodeURIComponent(busca)}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -105,7 +105,7 @@ function AgendamentosMassoterapeuta({ usuario }) {
   // -------------------------------
   const atualizarStatus = async (id, novoStatus) => {
     try {
-      const resp = await fetch(`http://localhost:5000/api/massoterapeuta/agendamentos/${id}`, {
+  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/massoterapeuta/agendamentos/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -163,7 +163,7 @@ function AgendamentosMassoterapeuta({ usuario }) {
     try {
       setModalCancelamento(prev => ({ ...prev, enviando: true }));
       
-      const resp = await fetch(`http://localhost:5000/api/massoterapeuta/agendamentos/${modalCancelamento.agendamentoId}/cancelar`, {
+  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/massoterapeuta/agendamentos/${modalCancelamento.agendamentoId}/cancelar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

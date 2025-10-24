@@ -41,7 +41,7 @@ function CadastroForm({ voltarLogin }) {
 
     try {
       // Faz requisição POST para cadastrar cliente no backend
-      const resp = await fetch("http://localhost:5000/api/clientes", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes", {
         method: "POST",
         headers: { "Content-Type": "application/json" }, // Define que está enviando JSON
         body: JSON.stringify({

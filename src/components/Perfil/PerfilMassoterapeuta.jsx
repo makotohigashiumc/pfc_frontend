@@ -18,7 +18,7 @@ function PerfilMassoterapeuta({ usuario, token }) {
 
     setLoading(true);
     try {
-      const resp = await fetch("http://localhost:5000/api/massoterapeuta/me", {
+  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/me", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
