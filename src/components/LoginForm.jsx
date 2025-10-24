@@ -32,8 +32,8 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
     // Define o endpoint da API baseado no tipo de usuário
     const endpoint =
       tipo === "cliente"
-        ? "/api/clientes/login"     // Endpoint para login de cliente
-        : "/api/massoterapeuta/login"; // Endpoint para login de massoterapeuta
+  ? "/clientes/login"     // Endpoint para login de cliente
+  : "/massoterapeuta/login"; // Endpoint para login de massoterapeuta
 
     try {
       // Faz requisição POST para o backend com as credenciais
