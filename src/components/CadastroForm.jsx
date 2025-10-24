@@ -27,6 +27,12 @@ function CadastroForm({ voltarLogin }) {
   // Processa o formulário e envia dados para o backend
   // -------------------------------
   const handleSubmit = async (e) => {
+    // Validação de senha forte no frontend
+    const senhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{7,}$/.test(senha);
+    if (!senhaForte) {
+      alert("A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.");
+      return;
+    }
     // Previne o comportamento padrão do formulário (recarregar página)
     e.preventDefault();
 
@@ -165,7 +171,7 @@ function CadastroForm({ voltarLogin }) {
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               placeholder="Digite sua senha"
-              minLength={6} // Mínimo de 6 caracteres
+              minLength={7} // Mínimo de 7 caracteres
               required
               style={{
                 paddingRight: '38px',
@@ -204,8 +210,12 @@ function CadastroForm({ voltarLogin }) {
               {mostrarSenha ? '🙈' : '👁️'}
             </button>
           </div>
-        </label>
-
+      </label>
+        {/* Aviso de requisitos de senha */}
+        <div style={{ color: '#d32f2f', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
+          A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.
+        </div>
+     
         {/* Botão de submissão */}
         <button type="submit" disabled={loading}>
           {/* Texto dinâmico baseado no estado de loading */}
