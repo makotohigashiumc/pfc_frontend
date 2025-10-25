@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 // Importação dos componentes principais da aplicação
 import Main from "./components/Main";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 // Importação dos estilos globais
 import "./App.css";
@@ -57,9 +58,8 @@ function App() {
   // Renderização do componente principal
   return (
     <>
-      {/* Componente principal que recebe as props de usuário e funções de autenticação */}
+      <Header usuario={usuario?.usuario} tipoUsuario={usuario?.tipo} />
       <Main usuario={usuario} login={login} logout={logout} />
-      {/* Componente de rodapé */}
       <Footer />
     </>
   );
