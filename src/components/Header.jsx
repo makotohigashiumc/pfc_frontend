@@ -1,10 +1,12 @@
 // Importações necessárias do React e React Router
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./Header.css";
 
 // Componente Header que exibe o cabeçalho da aplicação
 // Recebe como props: usuario (dados do usuário logado) e tipoUsuario (cliente ou massoterapeuta)
 function Header({ usuario, tipoUsuario }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   // Hook do React Router para navegação programática entre páginas
   const navigate = useNavigate();
 
@@ -33,52 +35,60 @@ function Header({ usuario, tipoUsuario }) {
   };
 
   // Renderização do componente header
+  // Função para renderizar os itens do menu
+  const renderMenuItems = () => (
+    <>
+      <li style={{ cursor: "pointer", fontWeight: "bold" }} onClick={handleSiteClick}>
+        HM Massoterapia
+      </li>
+      {tipoUsuario === "cliente" && (
+        <>
+          <li><Link to="/agendamentos-cliente">Agendamentos</Link></li>
+          <li><Link to="/perfil-cliente">Perfil</Link></li>
+          <li onClick={handleLogout} style={{ cursor: "pointer" }}>Sair</li>
+        </>
+      )}
+      {tipoUsuario === "massoterapeuta" && (
+        <>
+          <li><Link to="/agendamentos-massoterapeuta">Agendamentos</Link></li>
+          <li><Link to="/clientes">Clientes</Link></li>
+          <li><Link to="/perfil-massoterapeuta">Perfil</Link></li>
+          <li onClick={handleLogout} style={{ cursor: "pointer" }}>Sair</li>
+        </>
+      )}
+      {!usuario && (
+        <>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/cadastro">Cadastro</Link></li>
+        </>
+      )}
+    </>
+  );
+
   return (
     <header>
       <nav>
+        {/* Botão hambúrguer para mobile */}
+        <button className="menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Abrir menu">
+          &#9776;
+        </button>
+        {/* Menu normal para desktop */}
         <ul>
-          {/* Nome do site/logo que é clicável e navega conforme o tipo de usuário */}
-          <li style={{ cursor: "pointer", fontWeight: "bold" }} onClick={handleSiteClick}>
-            Nome do Site
-          </li>
-
-          {/* Menu específico para clientes logados */}
-          {tipoUsuario === "cliente" && (
-            <>
-              {/* Link para a página de agendamentos do cliente */}
-              <li><Link to="/agendamentos-cliente">Agendamentos</Link></li>
-              {/* Link para o perfil do cliente */}
-              <li><Link to="/perfil-cliente">Perfil</Link></li>
-              {/* Botão de logout para cliente */}
-              <li onClick={handleLogout} style={{ cursor: "pointer" }}>Sair</li>
-            </>
-          )}
-
-          {/* Menu específico para massoterapeutas logados */}
-          {tipoUsuario === "massoterapeuta" && (
-            <>
-              {/* Link para a página de agendamentos do massoterapeuta */}
-              <li><Link to="/agendamentos-massoterapeuta">Agendamentos</Link></li>
-              {/* Link para a página de clientes do massoterapeuta */}
-              <li><Link to="/clientes">Clientes</Link></li>
-              {/* Link para o perfil do massoterapeuta */}
-              <li><Link to="/perfil-massoterapeuta">Perfil</Link></li>
-              {/* Botão de logout para massoterapeuta */}
-              <li onClick={handleLogout} style={{ cursor: "pointer" }}>Sair</li>
-            </>
-          )}
-
-          {/* Menu para usuários não logados */}
-          {!usuario && (
-            <>
-              {/* Link para a página de login */}
-              <li><Link to="/login">Login</Link></li>
-              {/* Link para a página de cadastro */}
-              <li><Link to="/cadastro">Cadastro</Link></li>
-            </>
-          )}
+          {renderMenuItems()}
         </ul>
       </nav>
+      {/* Barra lateral para mobile */}
+      <div className={`sidebar${sidebarOpen ? " open" : ""}`}>
+        <ul>
+          {/* Botão para fechar barra lateral */}
+          <li style={{textAlign: "right", marginBottom: "1rem"}}>
+            <button onClick={() => setSidebarOpen(false)} aria-label="Fechar menu" style={{background: "none", border: "none", fontSize: "2rem", color: "#fff", cursor: "pointer"}}>&times;</button>
+          </li>
+          {renderMenuItems()}
+        </ul>
+      </div>
+      {/* Overlay para fechar barra lateral */}
+      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
     </header>
   );
 }
