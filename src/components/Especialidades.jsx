@@ -40,7 +40,7 @@ function Especialidades() {
       {/* Cabeçalho da página com título e descrição */}
       <div className="especialidades-header">
         <h1>Nossas Especialidades</h1>
-        <p>Conheça os tratamentos oferecidos pela HM Massoterapia com profissionais qualificados</p>
+        <p>Conheça os tratamentos oferecidos pela HM Massoterapia</p>
       </div>
       
       {/* Grid responsivo com cards das especialidades */}
