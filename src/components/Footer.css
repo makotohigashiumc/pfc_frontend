@@ -12,10 +12,10 @@
   /*background: #0d47a1; Cor alternativa comentada */
   color: #fff; /* Texto branco para contraste */
   font-size: 1rem; /* Tamanho de fonte padrão */
-  position: static; /* Posição fixa na tela */
-  left: unset; /* Alinhado à esquerda da viewport */
-  bottom: unset; /* Grudado na parte inferior */
-  z-index: unset; /* Acima do conteúdo, mas abaixo do header */
+  position: static !important; /* Posição fixa na tela */
+  left: unset !important; /* Alinhado à esquerda da viewport */
+  bottom: unset !important; /* Grudado na parte inferior */
+  z-index: unset !important; /* Acima do conteúdo, mas abaixo do header */
 }
 @media (max-width: 700px) {
   .footer {

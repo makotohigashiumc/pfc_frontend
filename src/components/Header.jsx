@@ -73,7 +73,7 @@ function Header({ usuario, tipoUsuario }) {
           &#9776;
         </button>
         {/* Menu normal para desktop */}
-        <ul>
+        <ul className="desktop-menu">
           {renderMenuItems()}
         </ul>
       </nav>
