@@ -15,6 +15,12 @@ body {
   color: #333; /* Cor de texto padrão escura para boa legibilidade */
 }
 
+body, #root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ===== MENU FIXO =====
    Header sempre visível no topo da página */
 header {
@@ -99,6 +105,7 @@ main {
   padding: 30px 20px; /* Espaçamento interno generoso */
   max-width: 900px; /* Largura máxima para legibilidade */
   margin: 60px auto 60px auto; /* Adiciona espaço abaixo do header */
+  flex: 1;
 }
 @media (max-width: 700px) {
   main {
