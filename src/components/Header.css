@@ -4,6 +4,7 @@ header {
   color: #fff;
   padding: 0.5rem 0;
   position: relative;
+  min-height: 56px;
 }
 nav {
   display: flex;
@@ -94,5 +95,9 @@ li:hover, li a:hover {
   }
   .menu-btn {
     display: block;
+  }
+  header {
+    min-height: 44px;
+    padding: 0.25rem 0;
   }
 }
