@@ -13,6 +13,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
   background: linear-gradient(to bottom right, #e0f7fa, #f5f5f5); /* Gradiente sutil azul para cinza */
   color: #333; /* Cor de texto padrão escura para boa legibilidade */
+  min-height: 100vh;
 }
 
 /* ===== MENU FIXO =====
@@ -24,8 +25,7 @@ header {
   display: flex; /* Layout flexível */
   justify-content: space-between; /* Distribui elementos nas extremidades */
   align-items: center; /* Centraliza verticalmente */
-  position: sticky; /* Header grudado no topo */
-  top: 0; /* Posição fixa no topo */
+  position: relative; /* Não fixo! */
   z-index: 1000; /* Acima de outros elementos */
   box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* Sombra para profundidade */
   border-bottom-left-radius: 8px; /* Bordas arredondadas */
@@ -99,6 +99,11 @@ main {
   padding: 30px 20px; /* Espaçamento interno generoso */
   max-width: 900px; /* Largura máxima para legibilidade */
   margin: 40px auto 60px auto; /* Centraliza horizontalmente com margens verticais */
+}
+@media (max-width: 700px) {
+  main {
+    margin-top: 16px; /* Garante espaço abaixo do header no mobile */
+  }
 }
 
 /* ===== FORMULÁRIOS ===== */
@@ -342,6 +347,12 @@ label {
 
   nav {
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px) {
+  main {
+    margin-top: 16px; /* Garante espaço abaixo do header no mobile */
   }
 }
 
