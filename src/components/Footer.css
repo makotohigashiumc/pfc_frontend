@@ -19,6 +19,10 @@
 }
 @media (max-width: 700px) {
   .footer {
-    position: static;
+    position: static !important;
+    left: unset !important;
+    bottom: unset !important;
+    z-index: unset !important;
+    width: 100%;
   }
 }
