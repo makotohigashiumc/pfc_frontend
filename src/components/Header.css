@@ -3,9 +3,11 @@ header {
   background: #31708e;
   color: #fff;
   padding: 0.25rem 0;
-  position: relative;
+  position: sticky;
+  top: 0;
   min-height: 40px;
-  z-index: 100;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 nav {
   display: flex;
@@ -95,7 +97,7 @@ nav {
 }
 
 /* Mobile: esconde menu normal, mostra hambúrguer */
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   .desktop-menu {
     display: none !important;
   }
@@ -112,7 +114,7 @@ nav {
   }
 }
 
-@media (min-width: 701px) {
+@media (min-width: 601px) {
   .sidebar {
     display: none !important;
   }
