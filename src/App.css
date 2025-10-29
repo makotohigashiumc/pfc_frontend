@@ -264,20 +264,11 @@ label {
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 600px) {
-  header h1 {
-    font-size: 20px;
-  }
-
   form {
     flex: 1 1 100%;
     padding: 24px 20px;
     min-width: 280px;
   }
-
-  nav {
-    flex-wrap: wrap;
-  }
-
   main {
     padding: 20px 15px;
   }
