@@ -48,6 +48,19 @@ nav {
   z-index: 1001;
 }
 
+/* Nome do site para mobile */
+.site-name-mobile {
+  display: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.2s;
+}
+.site-name-mobile:hover {
+  color: #ffeb3b;
+}
+
 /* Barra lateral */
 .sidebar {
   position: fixed;
@@ -105,12 +118,18 @@ nav {
     display: block !important;
     z-index: 1200;
   }
+  .site-name-mobile {
+    display: block !important;
+  }
   .sidebar {
     display: flex !important;
   }
   header {
     min-height: 32px;
     padding: 0.1rem 0;
+  }
+  .sidebar li {
+    font-size: 1rem; /* Diminuir tamanho para responsividade */
   }
 }
 
@@ -119,6 +138,9 @@ nav {
     display: none !important;
   }
   .menu-btn {
+    display: none !important;
+  }
+  .site-name-mobile {
     display: none !important;
   }
   .desktop-menu {

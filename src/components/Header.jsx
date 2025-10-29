@@ -38,9 +38,6 @@ function Header({ usuario, tipoUsuario }) {
   // Função para renderizar os itens do menu
   const renderMenuItems = (isMobile = false) => (
     <>
-      <li style={{ cursor: "pointer", fontWeight: "bold" }} onClick={() => { handleSiteClick(); if(isMobile) setSidebarOpen(false); }}>
-        HM Massoterapia
-      </li>
       {tipoUsuario === "cliente" && (
         <>
           <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/agendamentos-cliente">Agendamentos</Link></li>
@@ -74,8 +71,15 @@ function Header({ usuario, tipoUsuario }) {
         </button>
         {/* Menu normal para desktop */}
         <ul className="desktop-menu">
+          <li style={{ cursor: "pointer", fontWeight: "bold" }} onClick={handleSiteClick}>
+            HM Massoterapia
+          </li>
           {renderMenuItems(false)}
         </ul>
+        {/* Nome do site para mobile */}
+        <div className="site-name-mobile" onClick={handleSiteClick}>
+          HM Massoterapia
+        </div>
       </nav>
       {/* Barra lateral para mobile */}
       <div className={`sidebar${sidebarOpen ? " open" : ""}`}>
