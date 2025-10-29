@@ -14,23 +14,23 @@ nav {
   margin: 0 auto;
   padding: 0 1rem;
 }
-ul {
+.desktop-menu {
   display: flex;
   gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-li {
+.desktop-menu li {
   font-size: 1.1rem;
   cursor: pointer;
   transition: color 0.2s;
 }
-li a {
+.desktop-menu li a {
   color: #fff;
   text-decoration: none;
 }
-li:hover, li a:hover {
+.desktop-menu li:hover, .desktop-menu li a:hover {
   color: #ffeb3b;
 }
 
@@ -90,7 +90,7 @@ li:hover, li a:hover {
 
 /* Mobile: esconde menu normal, mostra hambúrguer */
 @media (max-width: 700px) {
-  nav ul {
+  .desktop-menu {
     display: none !important;
   }
   .menu-btn {
@@ -105,7 +105,6 @@ li:hover, li a:hover {
   }
 }
 
-/* Desktop: mostra menu normal, esconde hambúrguer */
 @media (min-width: 701px) {
   .sidebar {
     display: none !important;
@@ -113,7 +112,7 @@ li:hover, li a:hover {
   .menu-btn {
     display: none !important;
   }
-  nav ul {
+  .desktop-menu {
     display: flex !important;
   }
 }
