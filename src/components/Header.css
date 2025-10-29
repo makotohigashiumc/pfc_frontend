@@ -111,7 +111,7 @@ nav {
 }
 
 /* Mobile: esconde menu normal, mostra hambúrguer */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .desktop-menu {
     display: none !important;
   }
@@ -134,7 +134,7 @@ nav {
   }
 }
 
-@media (min-width: 601px) {
+@media (min-width: 901px) {
   .sidebar {
     display: none !important;
   }
