@@ -39,7 +39,8 @@ nav {
 
 /* Menu hambúrguer para mobile */
 .menu-btn {
-  display: none;
+  /* display: none; */
+  display: block;
   background: none;
   border: none;
   font-size: 2rem;
@@ -51,7 +52,7 @@ nav {
 /* Nome do site para mobile */
 .site-name-mobile {
   display: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   color: #fff;

@@ -66,7 +66,7 @@ function Header({ usuario, tipoUsuario }) {
     <header>
       <nav>
         {/* Botão hambúrguer para mobile */}
-        <button className="menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Abrir menu">
+        <button className="menu-btn" onClick={() => { alert('Menu clicked'); setSidebarOpen(true); }} aria-label="Abrir menu">
           &#9776;
         </button>
         {/* Menu normal para desktop */}
