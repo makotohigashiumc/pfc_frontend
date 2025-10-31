@@ -15,6 +15,19 @@ body {
   color: #333; /* Cor de texto padrão escura para boa legibilidade */
 }
 
+/* Container da aplicação para permitir footer no final da página
+   - usa flex column para que o main cresça e empurre o footer para baixo
+   - quando o conteúdo for menor que a viewport, o footer permanecerá na base da tela */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1 0 auto; /* Faz o main expandir para preencher o espaço disponível */
+}
+
 /* ===== MENU FIXO =====
    Header sempre visível no topo da página */
 header {

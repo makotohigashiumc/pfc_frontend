@@ -56,12 +56,12 @@ function App() {
 
   // Renderização do componente principal
   return (
-    <>
+    <div className="app">
       {/* Componente principal que recebe as props de usuário e funções de autenticação */}
       <Main usuario={usuario} login={login} logout={logout} />
       {/* Componente de rodapé */}
       <Footer />
-    </>
+    </div>
   );
 }
 
