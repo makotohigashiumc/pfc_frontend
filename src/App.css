@@ -15,10 +15,6 @@ body {
   color: #333; /* Cor de texto padrão escura para boa legibilidade */
 }
 
-body, #root {
-  display: block;
-}
-
 /* ===== MENU FIXO =====
    Header sempre visível no topo da página */
 header {
@@ -102,13 +98,7 @@ nav a.massoterapeuta:hover {
 main {
   padding: 30px 20px; /* Espaçamento interno generoso */
   max-width: 900px; /* Largura máxima para legibilidade */
-  margin: 60px auto 60px auto; /* Adiciona espaço abaixo do header */
-  min-height: calc(100vh - 70px - 48px); /* Garante que o footer só aparece após rolar */
-}
-@media (max-width: 700px) {
-  main {
-    margin-top: 60px; /* Garante espaço abaixo do header no mobile */
-  }
+  margin: 40px auto 60px auto; /* Centraliza horizontalmente com margens verticais */
 }
 
 /* ===== FORMULÁRIOS ===== */
@@ -352,12 +342,6 @@ label {
 
   nav {
     flex-wrap: wrap;
-  }
-}
-
-@media (max-width: 700px) {
-  main {
-    margin-top: 60px; /* Garante espaço abaixo do header no mobile */
   }
 }
 
