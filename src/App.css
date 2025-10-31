@@ -19,6 +19,84 @@ body, #root {
   display: block;
 }
 
+/* ===== MENU FIXO =====
+   Header sempre visível no topo da página */
+header {
+  background-color: #107594; /* Azul tema da clínica */
+  padding: 12px 25px; /* Espaçamento interno */
+  color: white; /* Texto branco para contraste */
+  display: flex; /* Layout flexível */
+  justify-content: space-between; /* Distribui elementos nas extremidades */
+  align-items: center; /* Centraliza verticalmente */
+  position: sticky; /* Header grudado no topo */
+  top: 0; /* Posição fixa no topo */
+  z-index: 1000; /* Acima de outros elementos */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* Sombra para profundidade */
+  border-bottom-left-radius: 8px; /* Bordas arredondadas */
+  border-bottom-right-radius: 8px;
+}
+
+/* Título principal no header */
+header h1 {
+  font-size: 24px; /* Tamanho grande para destaque */
+  font-weight: bold; /* Texto em negrito */
+  margin: 0; /* Remove margens padrão */
+  cursor: pointer; /* Indica que é clicável */
+  transition: transform 0.3s ease; /* Animação suave para hover */
+}
+
+/* Efeito hover no título */
+header h1:hover {
+  transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+}
+
+/* Container da navegação */
+nav {
+  display: flex; /* Layout flexível horizontal */
+  gap: 15px; /* Espaço entre links */
+}
+
+/* Estilo dos links de navegação */
+nav a {
+  background-color: #0a5b64; /* Azul mais escuro */
+  color: white; /* Texto branco */
+  text-decoration: none; /* Remove sublinhado padrão dos links */
+  padding: 10px 18px; /* Espaçamento interno generoso */
+  border-radius: 25px; /* Bordas bem arredondadas (pill shape) */
+  font-weight: bold; /* Texto em negrito */
+  cursor: pointer; /* Indica interatividade */
+  transition: all 0.3s ease; /* Animação suave para todas as propriedades */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Sombra para profundidade */
+}
+
+/* Efeito hover nos links de navegação */
+nav a:hover {
+  background-color: #0c3c4a; /* Cor mais escura no hover */
+  transform: translateY(-2px) scale(1.05); /* Move para cima e aumenta */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Sombra mais pronunciada */
+}
+
+/* ===== DIFERENCIAÇÃO POR TIPO DE USUÁRIO =====
+   Cores específicas para cliente e massoterapeuta */
+
+/* Links específicos para clientes */
+nav a.cliente {
+  background-color: #0288d1; /* Azul específico para clientes */
+}
+
+nav a.cliente:hover {
+  background-color: #0277bd; /* Tom mais escuro no hover */
+}
+
+/* Links específicos para massoterapeutas */
+nav a.massoterapeuta {
+  background-color: #107594; /* Azul padrão do sistema */
+}
+
+nav a.massoterapeuta:hover {
+  background-color: #0c5164; /* Tom mais escuro no hover */
+}
+
 /* ===== CONTEÚDO CENTRAL =====
    Layout principal da aplicação */
 main {
@@ -264,13 +342,16 @@ label {
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 600px) {
+  header h1 {
+    font-size: 20px;
+  }
+
   form {
     flex: 1 1 100%;
-    padding: 24px 20px;
-    min-width: 280px;
   }
-  main {
-    padding: 20px 15px;
+
+  nav {
+    flex-wrap: wrap;
   }
 }
 

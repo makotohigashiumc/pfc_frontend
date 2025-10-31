@@ -36,27 +36,30 @@ function Header({ usuario, tipoUsuario }) {
 
   // Renderização do componente header
   // Função para renderizar os itens do menu
-  const renderMenuItems = (isMobile = false) => (
+  const renderMenuItems = () => (
     <>
+      <li style={{ cursor: "pointer", fontWeight: "bold" }} onClick={handleSiteClick}>
+        HM Massoterapia
+      </li>
       {tipoUsuario === "cliente" && (
         <>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/agendamentos-cliente">Agendamentos</Link></li>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/perfil-cliente">Perfil</Link></li>
-          <li onClick={() => { handleLogout(); if(isMobile) setSidebarOpen(false); }} style={{ cursor: "pointer" }}>Sair</li>
+          <li><Link to="/agendamentos-cliente">Agendamentos</Link></li>
+          <li><Link to="/perfil-cliente">Perfil</Link></li>
+          <li onClick={handleLogout} style={{ cursor: "pointer" }}>Sair</li>
         </>
       )}
       {tipoUsuario === "massoterapeuta" && (
         <>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/agendamentos-massoterapeuta">Agendamentos</Link></li>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/clientes">Clientes</Link></li>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/perfil-massoterapeuta">Perfil</Link></li>
-          <li onClick={() => { handleLogout(); if(isMobile) setSidebarOpen(false); }} style={{ cursor: "pointer" }}>Sair</li>
+          <li><Link to="/agendamentos-massoterapeuta">Agendamentos</Link></li>
+          <li><Link to="/clientes">Clientes</Link></li>
+          <li><Link to="/perfil-massoterapeuta">Perfil</Link></li>
+          <li onClick={handleLogout} style={{ cursor: "pointer" }}>Sair</li>
         </>
       )}
       {!usuario && (
         <>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/login">Login</Link></li>
-          <li onClick={isMobile ? () => setSidebarOpen(false) : undefined}><Link to="/cadastro">Cadastro</Link></li>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/cadastro">Cadastro</Link></li>
         </>
       )}
     </>
@@ -66,20 +69,13 @@ function Header({ usuario, tipoUsuario }) {
     <header>
       <nav>
         {/* Botão hambúrguer para mobile */}
-        <button className="menu-btn" onClick={() => { alert('Menu clicked'); setSidebarOpen(true); }} aria-label="Abrir menu">
+        <button className="menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Abrir menu">
           &#9776;
         </button>
         {/* Menu normal para desktop */}
         <ul className="desktop-menu">
-          <li style={{ cursor: "pointer", fontWeight: "bold" }} onClick={handleSiteClick}>
-            HM Massoterapia
-          </li>
-          {renderMenuItems(false)}
+          {renderMenuItems()}
         </ul>
-        {/* Nome do site para mobile */}
-        <div className="site-name-mobile" onClick={handleSiteClick}>
-          HM Massoterapia
-        </div>
       </nav>
       {/* Barra lateral para mobile */}
       <div className={`sidebar${sidebarOpen ? " open" : ""}`}>
@@ -88,7 +84,7 @@ function Header({ usuario, tipoUsuario }) {
           <li style={{textAlign: "right", marginBottom: "1rem"}}>
             <button onClick={() => setSidebarOpen(false)} aria-label="Fechar menu" style={{background: "none", border: "none", fontSize: "2rem", color: "#fff", cursor: "pointer"}}>&times;</button>
           </li>
-          {renderMenuItems(true)}
+          {renderMenuItems()}
         </ul>
       </div>
       {/* Overlay para fechar barra lateral */}
