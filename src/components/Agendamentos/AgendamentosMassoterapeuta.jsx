@@ -328,7 +328,7 @@ function AgendamentosMassoterapeuta({ usuario }) {
                   }}>
                     <div style={{ marginBottom: "10px" }}>
                       <strong>👤 Cliente:</strong> {a.cliente_nome || "N/A"} <br />
-                      <strong>📅 Data:</strong> {new Date(a.data_hora).toLocaleString()} <br />
+                      <strong>📅 Data:</strong> {new Date(a.data_hora).toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'America/Sao_Paulo' })} <br />
                       <strong>📞 Telefone:</strong> {a.cliente_telefone || "N/A"} <br />
                       <strong>📧 Email:</strong> {a.cliente_email || "N/A"}
                       {a.sintomas && (
@@ -399,7 +399,7 @@ function AgendamentosMassoterapeuta({ usuario }) {
                   }}>
                     <div style={{ marginBottom: "10px" }}>
                       <strong>👤 Cliente:</strong> {a.cliente_nome || "N/A"} <br />
-                      <strong>📅 Data:</strong> {new Date(a.data_hora).toLocaleString()} <br />
+                      <strong>📅 Data:</strong> {new Date(a.data_hora).toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'America/Sao_Paulo' })} <br />
                       <strong>📞 Telefone:</strong> {a.cliente_telefone || "N/A"} <br />
                       <strong>📧 Email:</strong> {a.cliente_email || "N/A"} <br />
                       <strong>📊 Status:</strong> <span style={{ 
@@ -477,7 +477,7 @@ function AgendamentosMassoterapeuta({ usuario }) {
             
             <div style={{ marginBottom: "20px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "5px" }}>
               <p><strong>👤 Cliente:</strong> {modalCancelamento.clienteNome}</p>
-              <p><strong>📅 Data/Hora:</strong> {new Date(modalCancelamento.dataHora).toLocaleString()}</p>
+              <p><strong>📅 Data/Hora:</strong> {new Date(modalCancelamento.dataHora).toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'America/Sao_Paulo' })}</p>
             </div>
 
             <div style={{ marginBottom: "20px" }}>

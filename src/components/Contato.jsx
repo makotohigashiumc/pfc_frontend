@@ -234,7 +234,7 @@ function Contato() {
           {/* Horário de segunda a quinta */}
           <div className="horario-item">
             <span className="dia">Segunda à Quinta</span>
-            <span className="hora">8h30 às 18h30</span>
+            <span className="hora">8h às 18h</span>
           </div>
           
           {/* Horário de sexta */}

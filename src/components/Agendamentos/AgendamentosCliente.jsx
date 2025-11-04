@@ -19,78 +19,34 @@ function AgendamentosCliente({ usuario, token }) {
   const gerarHorariosDiaSelecionado = () => {
     // Se não há data selecionada, retorna lista vazia
     if (!dataHora) return [];
-    
+
     const horarios = [];
     const base = new Date(dataHora); // Data base selecionada pelo usuário
-    base.setHours(8, 30, 0, 0); // Define horário inicial (8:30)
-    
+    base.setHours(8, 0, 0, 0); // Define horário inicial (8:00)
+
     const agora = new Date(); // Horário atual do sistema
     const tempoMinimo = new Date(agora.getTime() + 30 * 60000); // 30 min de antecedência mínima
-    
-    // Gera horários de 8:30 às 18:30 com intervalos específicos
-    for (let h = 8; h <= 18; h++) {
-      if (h === 8) {
-        // Para as 8h, só disponibiliza 8:30
-        const horario = new Date(base);
-        horario.setHours(8, 30, 0, 0);
-        
-        // Verifica se este horário está ocupado consultando a lista de horários ocupados
-        const ocupado = horariosOcupados.some((ho) =>
-          ho.getFullYear() === horario.getFullYear() &&
-          ho.getMonth() === horario.getMonth() &&
-          ho.getDate() === horario.getDate() &&
-          ho.getHours() === horario.getHours() &&
-          ho.getMinutes() === horario.getMinutes()
-        );
-        
-        // Verifica se é horário passado ou muito próximo (menos de 30 min)
-        const horarioIndisponivel = horario < tempoMinimo;
-        
-        // Adiciona o horário à lista marcando se está ocupado ou indisponível
-        horarios.push({ horario, ocupado: ocupado || horarioIndisponivel });
-      } else {
-        // Para outras horas (9h às 18h), gera horários de 30 em 30 minutos
-        for (let m of [0, 30]) {
-          if (h === 18 && m === 30) {
-            // Inclui 18:30 como último horário do dia
-            const horario = new Date(base);
-            horario.setHours(18, 30, 0, 0);
-            
-            // Verifica ocupação
-            const ocupado = horariosOcupados.some((ho) =>
-              ho.getFullYear() === horario.getFullYear() &&
-              ho.getMonth() === horario.getMonth() &&
-              ho.getDate() === horario.getDate() &&
-              ho.getHours() === horario.getHours() &&
-              ho.getMinutes() === horario.getMinutes()
-            );
-            
-            // Verifica disponibilidade temporal
-            const horarioIndisponivel = horario < tempoMinimo;
-            horarios.push({ horario, ocupado: ocupado || horarioIndisponivel });
-            break; // Sai do loop após 18:30
-          }
-          
-          // Para horários antes de 18:30
-          if (h < 18 || (h === 18 && m === 0)) {
-            const horario = new Date(base);
-            horario.setHours(h, m, 0, 0);
-            
-            // Verifica ocupação
-            const ocupado = horariosOcupados.some((ho) =>
-              ho.getFullYear() === horario.getFullYear() &&
-              ho.getMonth() === horario.getMonth() &&
-              ho.getDate() === horario.getDate() &&
-              ho.getHours() === horario.getHours() &&
-              ho.getMinutes() === horario.getMinutes()
-            );
-            
-            // Verifica disponibilidade temporal
-            const horarioIndisponivel = horario < tempoMinimo;
-            horarios.push({ horario, ocupado: ocupado || horarioIndisponivel });
-          }
-        }
-      }
+
+    // Gera horários de 8:00 às 18:00 com intervalos de 1h, exceto 12:00, 13:00 e 14:00
+    const horariosPermitidos = [8, 9, 10, 11, 15, 16, 17, 18];
+    for (let h of horariosPermitidos) {
+      const horario = new Date(base);
+      horario.setHours(h, 0, 0, 0);
+
+      // Verifica se este horário está ocupado consultando a lista de horários ocupados
+      const ocupado = horariosOcupados.some((ho) =>
+        ho.getFullYear() === horario.getFullYear() &&
+        ho.getMonth() === horario.getMonth() &&
+        ho.getDate() === horario.getDate() &&
+        ho.getHours() === horario.getHours() &&
+        ho.getMinutes() === horario.getMinutes()
+      );
+
+      // Verifica se é horário passado ou muito próximo (menos de 30 min)
+      const horarioIndisponivel = horario < tempoMinimo;
+
+      // Adiciona o horário à lista marcando se está ocupado ou indisponível
+      horarios.push({ horario, ocupado: ocupado || horarioIndisponivel });
     }
     return horarios; // Retorna lista completa de horários com status
   };
@@ -144,14 +100,7 @@ function AgendamentosCliente({ usuario, token }) {
         
         // Converte strings de data/hora para objetos Date
         setHorariosOcupados(
-          data.map((h) => {
-            // h.data_hora formato: 'YYYY-MM-DD HH:mm:ss'
-            const [datePart, timePart] = h.data_hora.split(' ');
-            const [year, month, day] = datePart.split('-');
-            const [hour, minute] = timePart.split(':');
-            // Retorna objeto Date (month-1 porque Date usa índice base 0 para meses)
-            return new Date(Number(year), Number(month)-1, Number(day), Number(hour), Number(minute));
-          })
+          data.map((h) => new Date(h.data_hora))
         );
       } else {
         // Em caso de erro, limpa a lista
@@ -256,12 +205,12 @@ function AgendamentosCliente({ usuario, token }) {
       alert("Por favor, agende com pelo menos 30 minutos de antecedência.");
       return;
     }
-  // Formata data para ISO local (YYYY-MM-DDTHH:mm)
-  const pad = (n) => n.toString().padStart(2, '0');
-  const dataFormatada = `${dataHora.getFullYear()}-${pad(dataHora.getMonth()+1)}-${pad(dataHora.getDate())}T${pad(dataHora.getHours())}:${pad(dataHora.getMinutes())}`;
+  // Envia o horário como string local (YYYY-MM-DDTHH:mm:ss)
+  const pad = n => n.toString().padStart(2, '0');
+  const dataHoraLocal = `${dataHora.getFullYear()}-${pad(dataHora.getMonth()+1)}-${pad(dataHora.getDate())}T${pad(dataHora.getHours())}:${pad(dataHora.getMinutes())}:00`;
 
     try {
-  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
+      const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -269,7 +218,7 @@ function AgendamentosCliente({ usuario, token }) {
         },
         body: JSON.stringify({
           massoterapeuta_id: massoterapeutaSelecionado,
-          data_hora: dataFormatada,
+          data_hora: dataHoraLocal,
           sintomas: sintomas.trim() || null,
         }),
       });
@@ -297,18 +246,41 @@ function AgendamentosCliente({ usuario, token }) {
     }
   };
 
-  async function cancelarAgendamento(id) {
+  // Modal de cancelamento
+  const [modalCancelamento, setModalCancelamento] = useState({ aberto: false, agendamentoId: null });
+  const [motivoCancelamento, setMotivoCancelamento] = useState("");
+
+  function abrirModalCancelamento(id) {
+    setModalCancelamento({ aberto: true, agendamentoId: id });
+    setMotivoCancelamento("");
+  }
+
+  function fecharModalCancelamento() {
+    setModalCancelamento({ aberto: false, agendamentoId: null });
+    setMotivoCancelamento("");
+  }
+
+  async function cancelarAgendamentoComMotivo() {
+    const id = modalCancelamento.agendamentoId;
     const authToken = token || usuario?.token || localStorage.getItem("token");
-    if (!window.confirm("Tem certeza que deseja cancelar este agendamento?")) return;
+    if (!motivoCancelamento.trim()) {
+      alert("Por favor, escreva o motivo do cancelamento.");
+      return;
+    }
     try {
-  const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/clientes/agendamentos/${id}/cancelar`, {
+      const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/clientes/agendamentos/${id}/cancelar`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${authToken}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`
+        },
+        body: JSON.stringify({ motivo: motivoCancelamento })
       });
       if (resp.ok) {
         alert("Agendamento cancelado com sucesso!");
+        fecharModalCancelamento();
         // Atualiza histórico
-  const historicoResp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
+        const historicoResp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
           method: "GET",
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -386,32 +358,45 @@ function AgendamentosCliente({ usuario, token }) {
           showWeekNumbers={false}
           firstDayOfWeek={1} // Segunda-feira como primeiro dia
           calendarStartDay={1} // Inicia na segunda-feira
-            filterDate={(date) => {
-              const today = new Date();
-              today.setHours(0,0,0,0);
-              const d = new Date(date);
-              d.setHours(0,0,0,0);
-              const day = d.getDay(); // 0=domingo, 1=segunda, ..., 6=sábado
-              // Só permite datas futuras (>= hoje) e dias úteis (seg a qui)
-              // Bloqueia explicitamente sexta (5), sábado (6) e domingo (0)
-              return d >= today && day >= 1 && day <= 4;
-            }}
-            dayClassName={(date) => {
-              const today = new Date();
-              today.setHours(0,0,0,0);
-              const d = new Date(date);
-              d.setHours(0,0,0,0);
-              const day = d.getDay(); // 0=domingo, 1=segunda, ..., 6=sábado
-              if (d < today) return "dia-semana bloqueado";
-              if (day === 0) return "dia-semana bloqueado"; // domingo
-              if (day === 1) return "dia-semana segunda";
-              if (day === 2) return "dia-semana terca";
-              if (day === 3) return "dia-semana quarta";
-              if (day === 4) return "dia-semana quinta";
-              if (day === 5) return "dia-semana bloqueado"; // sexta
-              if (day === 6) return "dia-semana bloqueado"; // sábado
-              return "dia-semana bloqueado";
-            }}
+          filterDate={(date) => {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const d = new Date(date);
+            d.setHours(0,0,0,0);
+            const day = d.getDay(); // 0=domingo, 1=segunda, ..., 6=sábado
+            // Só permite datas futuras (>= hoje) e dias úteis (seg a qui)
+            // Bloqueia explicitamente sexta (5), sábado (6) e domingo (0)
+            return d >= today && day >= 1 && day <= 4;
+          }}
+          dayClassName={(date) => {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const d = new Date(date);
+            d.setHours(0,0,0,0);
+            const day = d.getDay(); // 0=domingo, 1=segunda, ..., 6=sábado
+            if (d < today) return "dia-semana bloqueado";
+            if (day === 0) return "dia-semana bloqueado"; // domingo
+            if (day === 1) return "dia-semana segunda";
+            if (day === 2) return "dia-semana terca";
+            if (day === 3) return "dia-semana quarta";
+            if (day === 4) return "dia-semana quinta";
+            if (day === 5) return "dia-semana bloqueado"; // sexta
+            if (day === 6) return "dia-semana bloqueado"; // sábado
+            return "dia-semana bloqueado";
+          }}
+          renderCustomHeader={({ monthDate, decreaseMonth, increaseMonth }) => (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+              <button type="button" onClick={decreaseMonth} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20 }} aria-label="Mês anterior">
+                ◀️
+              </button>
+              <span style={{ fontWeight: 'bold', fontSize: 16 }}>
+                {monthDate.toLocaleString('pt-BR', { month: 'long', year: 'numeric' })}
+              </span>
+              <button type="button" onClick={increaseMonth} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20 }} aria-label="Próximo mês">
+                ▶️
+              </button>
+            </div>
+          )}
         />
       </label>
       {dataHora && (
@@ -424,7 +409,11 @@ function AgendamentosCliente({ usuario, token }) {
                 type="button"
                 disabled={ocupado}
                 style={{
-                  background: ocupado ? '#ccc' : (dataHora && horario.getHours() === dataHora.getHours() && horario.getMinutes() === dataHora.getMinutes() ? '#1976d2' : '#e0f0ff'),
+                  background: ocupado
+                    ? '#ccc'
+                    : (dataHora && horario.getTime() === dataHora.getTime()
+                        ? '#90caf9' // Azul claro para selecionado
+                        : '#e0f0ff'),
                   color: ocupado ? '#888' : '#1976d2',
                   border: ocupado ? '1px solid #bbb' : '1px solid #1976d2',
                   borderRadius: 6,
@@ -435,16 +424,19 @@ function AgendamentosCliente({ usuario, token }) {
                 }}
                 onClick={() => {
                   if (!ocupado) {
-                    const novaData = new Date(dataHora);
-                    novaData.setHours(horario.getHours(), horario.getMinutes(), 0, 0);
-                    setDataHora(novaData);
+                    setDataHora(horario);
                   }
                 }}
               >
-                {horario.getHours().toString().padStart(2, '0')}:{horario.getMinutes().toString().padStart(2, '0')}
+                {horario.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })}
               </button>
             ))}
           </div>
+          {gerarHorariosDiaSelecionado().some(h => !h.ocupado) && (
+            <div style={{ marginTop: '8px', color: '#555', fontSize: '0.95em' }}>
+              * É necessário agendar com pelo menos 30 minutos de antecedência da consulta.
+            </div>
+          )}
         </div>
       )}
       
@@ -484,8 +476,8 @@ function AgendamentosCliente({ usuario, token }) {
           <li key={a.id}>
             <div>
               <strong>{formatarDataHora(a.data_hora)}</strong> - {traduzirStatus(a.status)} - Massoterapeuta: {a.massoterapeuta_nome || "Não informado"}
-              {(a.status === 'marcado' || a.status === 'pendente') && (
-                <button onClick={() => cancelarAgendamento(a.id)} style={{marginLeft: '12px'}}>Cancelar</button>
+              {(a.status === 'marcado' || a.status === 'pendente' || a.status === 'confirmado') && (
+                <button onClick={() => abrirModalCancelamento(a.id)} style={{marginLeft: '12px'}}>Cancelar</button>
               )}
             </div>
             {a.sintomas && (
@@ -495,6 +487,33 @@ function AgendamentosCliente({ usuario, token }) {
             )}
           </li>
         ))}
+      {/* Modal de cancelamento */}
+      {modalCancelamento.aberto && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999
+        }}>
+          <div style={{ background: '#fff', padding: 24, borderRadius: 8, minWidth: 320, boxShadow: '0 2px 12px #0002' }}>
+            <h3>Cancelar agendamento</h3>
+            <div style={{ marginBottom: 12 }}>
+              <label htmlFor="motivoCancelamento" style={{ fontWeight: 'bold' }}>Motivo do cancelamento:</label>
+              <textarea
+                id="motivoCancelamento"
+                value={motivoCancelamento}
+                onChange={e => setMotivoCancelamento(e.target.value)}
+                placeholder="Descreva o motivo do cancelamento..."
+                style={{ width: '100%', minHeight: 60, marginTop: 8, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
+                maxLength={500}
+              />
+              <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{motivoCancelamento.length}/500 caracteres</div>
+            </div>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button onClick={fecharModalCancelamento}>Voltar</button>
+              <button onClick={cancelarAgendamentoComMotivo} style={{ background: '#d32f2f', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 16px' }}>Confirmar Cancelamento</button>
+            </div>
+          </div>
+        </div>
+      )}
       </ul>
     </div>
   );
@@ -505,19 +524,17 @@ export default AgendamentosCliente;
 // Função para formatar data/hora para o padrão brasileiro
 function formatarDataHora(dataHoraStr) {
   if (!dataHoraStr) return "";
-  // Aceita formatos: YYYY-MM-DDTHH:mm, YYYY-MM-DD HH:mm:ss, YYYY-MM-DD HH:mm
-  let d;
-  let str = dataHoraStr.replace('T', ' ');
-  let [datePart, timePart] = str.split(' ');
-  if (datePart && timePart) {
-    const [year, month, day] = datePart.split('-');
-    const [hour, minute] = timePart.split(':');
-    d = new Date(Number(year), Number(month)-1, Number(day), Number(hour), Number(minute));
-  } else {
-    d = new Date(dataHoraStr);
-  }
+  // Sempre exibe no horário local do Brasil
+  const d = new Date(dataHoraStr);
   if (isNaN(d.getTime())) return "Data inválida";
-  return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+  return d.toLocaleString('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 }
 
 // Função para traduzir status para português
