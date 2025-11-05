@@ -94,7 +94,7 @@ function PaginaInicial() {
               <div className="beneficio-icon">📅</div>
               <div>
                 <h4>Agendamento Online</h4>
-                <p>Sistema prático e seguro para marcar suas sessões quando for conveniente.</p>
+                <p>Sistema prático e seguro para agendar suas sessões.</p>
               </div>
             </div>
             
@@ -103,7 +103,7 @@ function PaginaInicial() {
               <div className="beneficio-icon">👨‍⚕️</div>
               <div>
                 <h4>Profissional Qualificado</h4>
-                <p>Massoterapeutas certificados e experientes em diversas técnicas.</p>
+                <p>Massoterapeuta certificado e experiente em diversas técnicas.</p>
               </div>
             </div>
             
