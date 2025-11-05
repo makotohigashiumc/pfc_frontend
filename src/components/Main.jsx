@@ -41,8 +41,13 @@ function Main({ usuario, login, logout }) {
   // Isso garante que o usuário seja direcionado para a tela apropriada após o login
   useEffect(() => {
     if (usuario) {
-      // Limpa a seção atual para mostrar a interface padrão do usuário logado
-      setSecaoAtual("");
+      // Se o usuário for massoterapeuta, abrir diretamente a seção de agendamentos
+      if (usuario.tipo === "massoterapeuta") {
+        setSecaoAtual("agendamentos");
+      } else {
+        // Caso contrário, mantém o comportamento anterior (cliente vê a interface padrão)
+        setSecaoAtual("");
+      }
     }
   }, [usuario]); // Executa sempre que o estado 'usuario' mudar
 

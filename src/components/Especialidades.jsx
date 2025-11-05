@@ -1,6 +1,20 @@
 import React from "react";
 
 function Especialidades() {
+  // Handler reutilizável: se cliente logado -> agendamentos, senão -> login
+  const handleAgendarClick = () => {
+    try {
+      const usuarioSalvo = localStorage.getItem("usuario");
+      const usuarioObj = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
+      if (usuarioObj && usuarioObj.tipo === "cliente") {
+        window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "agendamentos" }));
+      } else {
+        window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }));
+      }
+    } catch (err) {
+      window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }));
+    }
+  };
   const especialidades = [
     {
       nome: "Quiropraxía",
@@ -71,7 +85,7 @@ function Especialidades() {
             {/* Botão para agendar consulta específica */}
             <button 
               className="btn-agendar"
-              onClick={() => window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }))}
+              onClick={handleAgendarClick}
             >
               Agendar Consulta
             </button>
@@ -90,7 +104,7 @@ function Especialidades() {
         {/* Botão principal de call-to-action */}
         <button 
           className="btn-primary-large"
-          onClick={() => window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }))}
+          onClick={handleAgendarClick}
         >
           Agende Sua Consulta
         </button>

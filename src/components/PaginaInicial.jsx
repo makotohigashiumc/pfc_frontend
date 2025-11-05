@@ -2,6 +2,23 @@ import React from "react";
 import "./PaginaInicial.css";
 
 function PaginaInicial() {
+  // Verifica se existe um usuário logado do tipo 'cliente'
+  const handleAgendarClick = () => {
+    try {
+      const usuarioSalvo = localStorage.getItem("usuario");
+      const usuarioObj = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
+      if (usuarioObj && usuarioObj.tipo === "cliente") {
+        // Se for cliente logado, vai para a seção de agendamentos
+        window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "agendamentos" }));
+      } else {
+        // Caso contrário, abre o login
+        window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }));
+      }
+    } catch (err) {
+      // Em caso de erro ao ler o localStorage, cai para a tela de login
+      window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }));
+    }
+  };
   return (
     <div className="pagina-inicial">
       {/* Hero Section */}
@@ -15,7 +32,7 @@ function PaginaInicial() {
           <div className="hero-buttons">
             <button 
               className="btn-primary"
-              onClick={() => window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }))}
+              onClick={handleAgendarClick}
             >
               Agendar Consulta
             </button>
@@ -156,7 +173,7 @@ function PaginaInicial() {
           {/* Botão principal de CTA */}
           <button 
             className="btn-cta"
-            onClick={() => window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }))}
+            onClick={handleAgendarClick}
           >
             Agendar Agora
           </button>

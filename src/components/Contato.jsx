@@ -6,6 +6,30 @@ import "./PaginaInicial.css"; // Importa estilos CSS
 // Componente de página de contato
 // Exibe informações de contato, formulário e detalhes da clínica
 function Contato() {
+  // Verifica se existe um usuário logado e obtém nome, email e telefone caso seja cliente
+  let usuarioLogado = null;
+  let emailUsuarioLogado = null;
+  let nomeUsuarioLogado = null;
+  let telefoneUsuarioLogado = null;
+  let isClienteLogado = false;
+  try {
+    const usuarioSalvo = localStorage.getItem("usuario");
+    usuarioLogado = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
+    isClienteLogado = !!(usuarioLogado && usuarioLogado.tipo === "cliente");
+    if (isClienteLogado) {
+      const u = usuarioLogado.usuario || {};
+      emailUsuarioLogado = u.email || null;
+      nomeUsuarioLogado = u.nome || u.nome_completo || null;
+      telefoneUsuarioLogado = u.telefone || u.telefone_celular || u.celular || null;
+    }
+  } catch (err) {
+    // se parsing falhar, consideramos usuário não logado
+    usuarioLogado = null;
+    emailUsuarioLogado = null;
+    nomeUsuarioLogado = null;
+    telefoneUsuarioLogado = null;
+    isClienteLogado = false;
+  }
   // ===== ESTADOS DO FORMULÁRIO =====
   const [formData, setFormData] = useState({
     nome: "",
@@ -36,19 +60,33 @@ function Contato() {
 
     try {
       // Validação básica no front-end
-      if (!formData.nome.trim() || !formData.email.trim() || 
-          !formData.assunto.trim() || !formData.mensagem.trim()) {
+      // Se o usuário estiver logado, usamos os dados cadastrados e não exigimos os campos no formulário
+      if (!formData.assunto.trim() || !formData.mensagem.trim()) {
         throw new Error("Por favor, preencha todos os campos obrigatórios.");
       }
 
+      // Se não houver email no usuário logado, ainda exigimos que o campo seja preenchido
+      if (!isClienteLogado && (!formData.nome.trim() || !formData.email.trim())) {
+        throw new Error("Por favor, preencha nome e e-mail para contato.");
+      }
+
+      // Prepara payload usando dados do usuário logado quando disponíveis
+      const payload = {
+        nome: nomeUsuarioLogado || formData.nome,
+        email: emailUsuarioLogado || formData.email,
+        telefone: telefoneUsuarioLogado || formData.telefone,
+        assunto: formData.assunto,
+        mensagem: formData.mensagem
+      };
+
       // Envia dados para a API
-      const response = await enviarMensagemContato(formData);
+      const response = await enviarMensagemContato(payload);
       
       // Sucesso
       setMessage(response.mensagem);
       setMessageType("success");
       
-      // Limpa o formulário
+      // Limpa o formulário (não é necessário limpar email logado)
       setFormData({
         nome: "",
         email: "",
@@ -138,46 +176,52 @@ function Contato() {
           
           {/* Formulário para envio de mensagens */}
           <form className="formulario-contato" onSubmit={handleSubmit}>
-            {/* Campo Nome */}
-            <div className="form-group">
-              <label htmlFor="nome">Nome Completo</label>
-              <input 
-                type="text" 
-                id="nome" 
-                name="nome" 
-                value={formData.nome}
-                onChange={handleChange}
-                required 
-                disabled={isLoading}
-              />
-            </div>
+            {/* Campo Nome - só exibe quando usuário não está logado */}
+            {!isClienteLogado && (
+              <div className="form-group">
+                <label htmlFor="nome">Nome Completo</label>
+                <input 
+                  type="text" 
+                  id="nome" 
+                  name="nome" 
+                  value={formData.nome}
+                  onChange={handleChange}
+                  required 
+                  disabled={isLoading}
+                />
+              </div>
+            )}
             
-            {/* Campo Email */}
-            <div className="form-group">
-              <label htmlFor="email">E-mail</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                value={formData.email}
-                onChange={handleChange}
-                required 
-                disabled={isLoading}
-              />
-            </div>
+            {/* Campo Email: só exibe quando usuário não está logado */}
+            {!isClienteLogado && (
+              <div className="form-group">
+                <label htmlFor="email">E-mail</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  required 
+                  disabled={isLoading}
+                />
+              </div>
+            )}
             
-            {/* Campo Telefone (opcional) */}
-            <div className="form-group">
-              <label htmlFor="telefone">Telefone</label>
-              <input 
-                type="tel" 
-                id="telefone" 
-                name="telefone" 
-                value={formData.telefone}
-                onChange={handleChange}
-                disabled={isLoading}
-              />
-            </div>
+            {/* Campo Telefone (opcional) - só exibe quando usuário não está logado */}
+            {!isClienteLogado && (
+              <div className="form-group">
+                <label htmlFor="telefone">Telefone</label>
+                <input 
+                  type="tel" 
+                  id="telefone" 
+                  name="telefone" 
+                  value={formData.telefone}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                />
+              </div>
+            )}
             
             {/* Seletor de Assunto */}
             <div className="form-group">

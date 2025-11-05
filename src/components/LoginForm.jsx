@@ -14,6 +14,11 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
   const [tipo, setTipo] = useState("cliente");
   // Estado para indicar se está fazendo requisição (mostra loading)
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  // Modal visível para erros de login (backend / rede / não confirmado)
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
 
   // Função que trata o envio do formulário de login
   const handleSubmit = async (e) => {
@@ -22,7 +27,7 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
 
     // Validação básica dos campos obrigatórios
     if (!email || !senha) {
-      alert("Preencha email e senha.");
+      setErrorMessage("Preencha email e senha.");
       return; // Para a execução se validação falhar
     }
 
@@ -53,26 +58,35 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
         
         // Valida se o token é válido
         if (!token || token === "undefined") {
-          alert("Token inválido recebido do backend.");
+          setErrorMessage("Token inválido recebido do backend.");
           return;
         }
         
         // Salva o token no localStorage para persistência
         localStorage.setItem("token", token);
-        
-        // Mostra mensagem de sucesso
-        alert("Login realizado com sucesso!");
-        
+
+        // Limpa possível mensagem de erro anterior
+        setErrorMessage("");
+
         // Chama a função de login passada como prop para atualizar o estado global
         login({ tipo, usuario: data.usuario, token });
       } else {
-        // Se houve erro, mostra a mensagem de erro do backend ou uma padrão
-        alert(data.erro || "Email ou senha inválidos.");
+        // Se houve erro de backend, mostrar modal com a mensagem (ex: email não confirmado, credenciais inválidas)
+        const msg = data.erro || "Email ou senha inválidos.";
+        setModalTitle("Erro ao efetuar o login");
+        setModalMessage(msg);
+        setModalVisible(true);
+        // também preencher a caixa de erro pequena para retrocompatibilidade
+        setErrorMessage(msg);
       }
     } catch (err) {
       // Captura erros de rede ou outros erros inesperados
       console.error(err);
-      alert("Erro ao tentar logar. Verifique sua conexão.");
+      const msg = "Erro ao tentar logar. Verifique sua conexão.";
+      setModalTitle("Erro de conexão");
+      setModalMessage(msg);
+      setModalVisible(true);
+      setErrorMessage(msg);
     } finally {
       // Sempre desativa o loading, independente de sucesso ou erro
       setLoading(false);
@@ -86,6 +100,30 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
       <form onSubmit={handleSubmit}>
         {/* Título do formulário */}
         <h2>Login</h2>
+
+        {/* Mensagem de erro pequena, aparece quando a requisição ou validação falham */}
+        {errorMessage && (
+          <div style={{
+            backgroundColor: '#fdecea',
+            color: '#b71c1c',
+            padding: '10px 12px',
+            borderRadius: '6px',
+            marginBottom: '12px',
+            border: '1px solid #f5c6cb',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }} role="alert">
+            <span>{errorMessage}</span>
+            <button type="button" onClick={() => setErrorMessage("")} style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#b71c1c',
+              fontWeight: 'bold'
+            }}>X</button>
+          </div>
+        )}
 
         {/* Seletor do tipo de usuário */}
         <label>
@@ -190,6 +228,56 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
           </button>
         </div>
       </form>
+
+      {/* Modal centralizado (estilo similar ao modal de sucesso do cadastro) */}
+      {modalVisible && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.35)',
+            zIndex: 9999,
+            padding: '20px'
+          }}
+          onClick={() => setModalVisible(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '420px',
+              maxWidth: '100%',
+              background: '#fff',
+              borderRadius: '8px',
+              boxShadow: '0 6px 22px rgba(0,0,0,0.25)',
+              padding: '22px',
+              textAlign: 'center'
+            }}
+          >
+            <h3 style={{ marginTop: 0, color: '#0b6b8a' }}>{modalTitle || 'Aviso'}</h3>
+            <p style={{ color: '#333', lineHeight: 1.4 }}>{modalMessage}</p>
+            <div style={{ marginTop: 18 }}>
+              <button
+                onClick={() => setModalVisible(false)}
+                style={{
+                  background: '#0b6b8a',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '8px 18px',
+                  borderRadius: '6px',
+                  cursor: 'pointer'
+                }}
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

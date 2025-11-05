@@ -1,3 +1,45 @@
+  // Modal de sucesso
+  const ModalSucesso = ({ onClose }) => (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      background: 'rgba(0,0,0,0.3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 9999
+    }}>
+      <div style={{
+        background: '#fff',
+        padding: '32px 24px',
+        borderRadius: '12px',
+        boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
+        textAlign: 'center',
+        minWidth: '320px',
+        maxWidth: '90vw',
+        position: 'relative'
+      }}>
+        <h3 style={{ color: '#00796b', marginBottom: '16px' }}>Cadastro realizado!</h3>
+        <p style={{ marginBottom: '24px', color: '#333', fontSize: '1.1em' }}>
+          Por favor, confirme seu e-mail antes de acessar o sistema.<br />
+          Você receberá um e-mail para ativar sua conta.
+        </p>
+        <button onClick={onClose} style={{
+          background: '#00796b',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '6px',
+          padding: '10px 24px',
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          fontSize: '1em'
+        }}>Fechar</button>
+      </div>
+    </div>
+  );
 // CadastroForm.jsx
 // Formulário exclusivo para CLIENTES se cadastrarem no sistema
 // Não permite cadastro de massoterapeutas - eles são cadastrados separadamente
@@ -17,11 +59,17 @@ function CadastroForm({ voltarLogin }) {
   // -------------------------------
   const [nome, setNome] = useState("");                    // Nome completo do cliente
   const [telefone, setTelefone] = useState("");            // Telefone para contato
+  // Validação para aceitar apenas números no campo telefone
+  const handleTelefoneChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ""); // Remove tudo que não for dígito
+    setTelefone(value);
+  };
   const [sexo, setSexo] = useState("");                    // Sexo: Masculino/Feminino/Outro
   const [dataNascimento, setDataNascimento] = useState(""); // Data de nascimento
   const [email, setEmail] = useState("");                  // Email para login e contato
   const [senha, setSenha] = useState("");                  // Senha para acesso
   const [loading, setLoading] = useState(false);           // Evita duplo clique durante requisição
+  const [sucessoCadastro, setSucessoCadastro] = useState(false); // Exibe mensagem de sucesso
   // -------------------------------
   // Função para submeter cadastro
   // Processa o formulário e envia dados para o backend
@@ -69,7 +117,7 @@ function CadastroForm({ voltarLogin }) {
         setDataNascimento("");
         setEmail("");
         setSenha("");
-        // Não volta para tela de login automaticamente - usuário deve confirmar email
+        setSucessoCadastro(true); // Exibe mensagem de sucesso
       } else {
         // Trata erros retornados pelo backend
         let errMsg;
@@ -100,6 +148,7 @@ function CadastroForm({ voltarLogin }) {
   return (
     <div className="form-container">
       {/* Formulário principal com handler de submissão */}
+      {sucessoCadastro && <ModalSucesso onClose={() => setSucessoCadastro(false)} />}
       <form onSubmit={handleSubmit} className="cadastro-form">
         {/* Título do formulário */}
         <h2>Cadastro de Cliente</h2>
@@ -121,9 +170,10 @@ function CadastroForm({ voltarLogin }) {
           <input
             type="tel" // Tipo específico para telefone
             value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
+            onChange={handleTelefoneChange}
             placeholder="(xx) xxxxx-xxxx"
             required
+            maxLength={11}
           />
         </label>
 
@@ -223,28 +273,21 @@ function CadastroForm({ voltarLogin }) {
           {loading ? "Cadastrando..." : "Cadastrar"}
         </button>
 
-        {/* Link para voltar ao login */}
-        <p>
-          Já tem conta?{" "}
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault(); // Previne navegação padrão
-              voltarLogin(); // Chama função para voltar ao login
-            }}
+        {/* Link para voltar ao login (estilizado) */}
+        <div style={{ textAlign: 'center', marginTop: 14 }}>
+          <span style={{ color: '#666', fontSize: '0.95rem' }}>Já tem conta?</span>
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); voltarLogin(); }}
+            style={{ marginLeft: 10 }}
           >
-            Login
-          </a>
-        </p>
-        
-        {/* Aviso sobre confirmação de email */}
-        <div style={{ marginTop: "2rem", color: "#0077b6", fontWeight: "bold" }}>
-          Após o cadastro, você receberá um e-mail para confirmar sua conta antes de acessar o sistema.
+            Entrar
+          </button>
         </div>
+        
       </form>
     </div>
   );
 }
-
 // Exportação do componente
 export default CadastroForm;

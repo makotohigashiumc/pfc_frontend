@@ -11,20 +11,23 @@ function PerfilMassoterapeuta({ usuario, token }) {
   const [loading, setLoading] = useState(false);
 
   const salvar = async () => {
-    if (!nome.trim() || !telefone.trim()) {
+    // sanitiza telefone removendo tudo que não for dígito
+    const telefoneSanitizado = telefone ? telefone.replace(/\D/g, "") : "";
+
+    if (!nome.trim() || !telefoneSanitizado.trim()) {
       alert("Preencha todos os campos.");
       return;
     }
 
     setLoading(true);
     try {
-  const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/me", {
+      const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/massoterapeuta/me", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ nome, telefone }),
+        body: JSON.stringify({ nome, telefone: telefoneSanitizado }),
       });
 
       if (resp.ok) {
@@ -32,7 +35,7 @@ function PerfilMassoterapeuta({ usuario, token }) {
         setEditando(false);
         // Atualiza os dados do usuário no estado local
         usuario.nome = nome;
-        usuario.telefone = telefone;
+        usuario.telefone = telefoneSanitizado;
       } else {
         const err = await resp.json();
         alert(err.erro || "Erro ao atualizar informações.");
@@ -67,9 +70,11 @@ function PerfilMassoterapeuta({ usuario, token }) {
               Telefone:
               <input
                 type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={telefone}
-                onChange={(e) => setTelefone(e.target.value)}
-                placeholder="(00) 00000-0000"
+                onChange={(e) => setTelefone(e.target.value.replace(/\D/g, ""))}
+                placeholder="Somente números"
                 required
               />
             </label>
