@@ -41,7 +41,7 @@ function AgendamentosCliente({ usuario, token }) {
         ho.getHours() === horario.getHours() &&
         ho.getMinutes() === horario.getMinutes()
       );
-
+  {/* Modal de cancelamento */}
       // Verifica se é horário passado ou muito próximo (menos de 30 min)
       const horarioIndisponivel = horario < tempoMinimo;
 
@@ -65,6 +65,8 @@ function AgendamentosCliente({ usuario, token }) {
   const [forceUpdate, setForceUpdate] = useState(0);           // Contador para forçar re-render dos horários
   const [horarioAtual, setHorarioAtual] = useState(new Date()); // Horário atual para verificações de disponibilidade
   const [sintomas, setSintomas] = useState("");               // Sintomas relatados pelo cliente
+  // Modal exibido após solicitar agendamento (aguardando confirmação da clínica)
+  const [modalAguardando, setModalAguardando] = useState({ aberto: false });
   
   // ================================
   // EFEITOS (useEffect)
@@ -224,7 +226,8 @@ function AgendamentosCliente({ usuario, token }) {
       });
 
       if (resp.ok) {
-        alert("Agendamento solicitado! Aguardando confirmação da clínica.");
+        // Abre modal informando que o agendamento foi solicitado e está aguardando confirmação
+        setModalAguardando({ aberto: true });
         setDataHora("");
         setSintomas("");
 
@@ -437,6 +440,21 @@ function AgendamentosCliente({ usuario, token }) {
               * É necessário agendar com pelo menos 30 minutos de antecedência da consulta.
             </div>
           )}
+        </div>
+      )}
+      {/* Modal de aguardando confirmação */}
+      {modalAguardando.aberto && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999
+        }}>
+          <div style={{ background: '#fff', padding: 24, borderRadius: 8, minWidth: 280, boxShadow: '0 2px 12px #0002', textAlign: 'center' }}>
+            <h3>Aguardando confirmação da clínica</h3>
+            <p style={{ marginTop: 8, color: '#444' }}>Seu agendamento foi solicitado com sucesso. Aguarde a confirmação pela clínica.</p>
+            <div style={{ marginTop: 16 }}>
+              <button onClick={() => setModalAguardando({ aberto: false })} style={{ padding: '8px 16px', borderRadius: 6 }}>Fechar</button>
+            </div>
+          </div>
         </div>
       )}
       
