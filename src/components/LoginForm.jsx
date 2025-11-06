@@ -55,7 +55,7 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
       if (resp.ok) {
         // Extrai o token da resposta (pode estar em data.token ou data.usuario.token)
         const token = data.token || data.usuario?.token;
-        
+         
         // Valida se o token é válido
         if (!token || token === "undefined") {
           setErrorMessage("Token inválido recebido do backend.");
