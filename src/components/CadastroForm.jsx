@@ -1,4 +1,4 @@
-  // Modal de sucesso
+// Modal de sucesso
   const ModalSucesso = ({ onClose }) => (
     <div style={{
       position: 'fixed',
@@ -64,7 +64,7 @@ function CadastroForm({ voltarLogin }) {
     const value = e.target.value.replace(/\D/g, ""); // Remove tudo que não for dígito
     setTelefone(value);
   };
-  const [sexo, setSexo] = useState("");                    // Sexo: Masculino/Feminino/Outro
+  const [sexo, setSexo] = useState("");                    // Sexo: Masculino/Feminino
   const [dataNascimento, setDataNascimento] = useState(""); // Data de nascimento
   const [email, setEmail] = useState("");                  // Email para login e contato
   const [senha, setSenha] = useState("");                  // Senha para acesso
@@ -84,9 +84,9 @@ function CadastroForm({ voltarLogin }) {
     // Previne o comportamento padrão do formulário (recarregar página)
     e.preventDefault();
 
-    // Validação do campo sexo antes de enviar
-    if (!["Masculino", "Feminino", "Outro"].includes(sexo)) {
-      alert("Selecione um sexo válido: Masculino, Feminino ou Outro.");
+    // Validação do campo sexo antes de enviar (apenas Masculino ou Feminino)
+    if (!["Masculino", "Feminino"].includes(sexo)) {
+      alert("Selecione um sexo válido: Masculino ou Feminino.");
       return; // Para execução se validação falhar
     }
 
@@ -184,7 +184,6 @@ function CadastroForm({ voltarLogin }) {
             <option value="">Selecione o sexo</option>
             <option value="Masculino">Masculino</option>
             <option value="Feminino">Feminino</option>
-            <option value="Outro">Outro</option>
           </select>
         </label>
 
