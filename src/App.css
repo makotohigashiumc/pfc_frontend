@@ -6,18 +6,13 @@
    - Estilos de formulários
    - Responsividade mobile
    =================================== */
-
-/* Estilos base do corpo da página */
 body {
-  margin: 0; /* Remove margens padrão do navegador */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
-  background: linear-gradient(to bottom right, #e0f7fa, #f5f5f5); /* Gradiente sutil azul para cinza */
-  color: #333; /* Cor de texto padrão escura para boa legibilidade */
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  background: linear-gradient(to bottom right, #e0f7fa, #f5f5f5); 
+  color: #333; 
 }
 
-/* Container da aplicação para permitir footer no final da página
-   - usa flex column para que o main cresça e empurre o footer para baixo
-   - quando o conteúdo for menor que a viewport, o footer permanecerá na base da tela */
 .app {
   min-height: 100vh;
   display: flex;
@@ -25,93 +20,84 @@ body {
 }
 
 .app main {
-  flex: 1 0 auto; /* Faz o main expandir para preencher o espaço disponível */
+  flex: 1 0 auto; 
 }
 
-/* ===== MENU FIXO =====
-   Header sempre visível no topo da página */
+/* ===== MENU FIXO ===== */
 header {
-  background-color: #107594; /* Azul tema da clínica */
-  padding: 12px 25px; /* Espaçamento interno */
-  color: white; /* Texto branco para contraste */
-  display: flex; /* Layout flexível */
-  justify-content: space-between; /* Distribui elementos nas extremidades */
-  align-items: center; /* Centraliza verticalmente */
-  position: sticky; /* Header grudado no topo */
-  top: 0; /* Posição fixa no topo */
-  z-index: 1000; /* Acima de outros elementos */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* Sombra para profundidade */
-  border-bottom-left-radius: 8px; /* Bordas arredondadas */
+  background-color: #107594; 
+  padding: 12px 25px; 
+  color: white; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  position: sticky; 
+  top: 0; 
+  z-index: 1000; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); 
+  border-bottom-left-radius: 8px; 
   border-bottom-right-radius: 8px;
 }
 
-/* Título principal no header */
 header h1 {
-  font-size: 24px; /* Tamanho grande para destaque */
-  font-weight: bold; /* Texto em negrito */
-  margin: 0; /* Remove margens padrão */
-  cursor: pointer; /* Indica que é clicável */
-  transition: transform 0.3s ease; /* Animação suave para hover */
+  font-size: 24px; 
+  font-weight: bold; 
+  margin: 0; 
+  cursor: pointer;
+  transition: transform 0.3s ease; 
 }
 
-/* Efeito hover no título */
 header h1:hover {
-  transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+  transform: scale(1.05); 
 }
 
-/* Container da navegação */
 nav {
-  display: flex; /* Layout flexível horizontal */
-  gap: 15px; /* Espaço entre links */
+  display: flex; 
+  gap: 15px; 
 }
 
-/* Estilo dos links de navegação */
 nav a {
-  background-color: #0a5b64; /* Azul mais escuro */
-  color: white; /* Texto branco */
-  text-decoration: none; /* Remove sublinhado padrão dos links */
-  padding: 10px 18px; /* Espaçamento interno generoso */
-  border-radius: 25px; /* Bordas bem arredondadas (pill shape) */
-  font-weight: bold; /* Texto em negrito */
-  cursor: pointer; /* Indica interatividade */
-  transition: all 0.3s ease; /* Animação suave para todas as propriedades */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Sombra para profundidade */
+  background-color: #0a5b64; 
+  color: white;
+  text-decoration: none; 
+  padding: 10px 18px; 
+  border-radius: 25px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
 }
 
-/* Efeito hover nos links de navegação */
 nav a:hover {
-  background-color: #0c3c4a; /* Cor mais escura no hover */
-  transform: translateY(-2px) scale(1.05); /* Move para cima e aumenta */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Sombra mais pronunciada */
+  background-color: #0c3c4a;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* ===== DIFERENCIAÇÃO POR TIPO DE USUÁRIO =====
-   Cores específicas para cliente e massoterapeuta */
-
-/* Links específicos para clientes */
+/* ===== DIFERENCIAÇÃO POR TIPO DE USUÁRIO ===== */
+ 
 nav a.cliente {
-  background-color: #0288d1; /* Azul específico para clientes */
+  background-color: #0288d1; 
 }
 
 nav a.cliente:hover {
-  background-color: #0277bd; /* Tom mais escuro no hover */
+  background-color: #0277bd;
 }
 
-/* Links específicos para massoterapeutas */
 nav a.massoterapeuta {
-  background-color: #107594; /* Azul padrão do sistema */
+  background-color: #107594; 
 }
 
 nav a.massoterapeuta:hover {
-  background-color: #0c5164; /* Tom mais escuro no hover */
+  background-color: #0c5164; 
 }
 
-/* ===== CONTEÚDO CENTRAL =====
-   Layout principal da aplicação */
+/* ===== CONTEÚDO CENTRAL ===== */
+   
 main {
-  padding: 30px 20px; /* Espaçamento interno generoso */
-  max-width: 900px; /* Largura máxima para legibilidade */
-  margin: 40px auto 60px auto; /* Centraliza horizontalmente com margens verticais */
+  padding: 30px 20px; 
+  max-width: 900px; 
+  margin: 40px auto 60px auto; 
 }
 
 /* ===== FORMULÁRIOS ===== */
