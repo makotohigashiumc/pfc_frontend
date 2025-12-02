@@ -23,13 +23,13 @@ function PaginaInicial() {
     <div className="pagina-inicial">
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-content">
+        <div className="hero-content centralizado">
           <h1>Bem-vindo à HM Massoterapia</h1>
           <p className="hero-subtitle">
-            Seu bem-estar é nossa prioridade. Oferecemos serviços profissionais de massoterapia. 
+            Seu bem-estar é nossa prioridade. Oferecemos serviços profissionais de massoterapia. <br />
             Agende agora a sua consulta.
           </p>
-          <div className="hero-buttons">
+          <div className="hero-buttons centralizar-botoes">
             <button 
               className="btn-primary"
               onClick={handleAgendarClick}
@@ -43,9 +43,6 @@ function PaginaInicial() {
               Nossas Especialidades
             </button>
           </div>
-        </div>
-        <div className="hero-image">
-          <div className="massage-icon">💆‍♀️</div>
         </div>
       </section>
 
