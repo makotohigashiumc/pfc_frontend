@@ -67,6 +67,10 @@ function CadastroForm({ voltarLogin }) {
   const [sexo, setSexo] = useState("");                    // Sexo: Masculino/Feminino
   const [dataNascimento, setDataNascimento] = useState(""); // Data de nascimento
   const [email, setEmail] = useState("");                  // Email para login e contato
+  // Força email para minúsculo ao digitar
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value.toLowerCase());
+  };
   const [senha, setSenha] = useState("");                  // Senha para acesso
   const [loading, setLoading] = useState(false);           // Evita duplo clique durante requisição
   const [sucessoCadastro, setSucessoCadastro] = useState(false); // Exibe mensagem de sucesso
@@ -204,7 +208,7 @@ function CadastroForm({ voltarLogin }) {
           <input
             type="email" // Validação nativa de email
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
             placeholder="seuemail@exemplo.com"
             required
           />

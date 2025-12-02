@@ -8,6 +8,10 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   // Estado para armazenar o email digitado pelo usuário
   const [email, setEmail] = useState("");
+  // Força email para minúsculo ao digitar
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value.toLowerCase());
+  };
   // Estado para armazenar a senha digitada pelo usuário
   const [senha, setSenha] = useState("");
   // Estado para o tipo de usuário (cliente ou massoterapeuta)
@@ -140,7 +144,7 @@ function LoginForm({ login, abrirCadastro, abrirRecuperarSenha }) {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Atualiza estado a cada digitação
+            onChange={handleEmailChange} // Força minúsculo
             placeholder="Email"
             required
           />
