@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PoliticaPrivacidade from "./components/PoliticaPrivacidade";
+// Main já contém lógica para detectar /confirmar-email/* e /redefinir-senha
+// Importação dos componentes principais da aplicação
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 import "./App.css";
@@ -47,7 +49,12 @@ function App() {
     <BrowserRouter>
       <div className="app">
         <Routes>
+          {/* Rota principal que monta o Main component */}
           <Route path="/" element={<Main usuario={usuario} login={login} logout={logout} />} />
+          {/* Rotas diretas para confirmação de e-mail e redefinição de senha
+              Main já reconhece esses caminhos e renderiza os componentes adequados */}
+          <Route path="/confirmar-email/*" element={<Main usuario={usuario} login={login} logout={logout} />} />
+          <Route path="/redefinir-senha" element={<Main usuario={usuario} login={login} logout={logout} />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
         </Routes>
         <Footer />

@@ -191,6 +191,8 @@ function AgendamentosMassoterapeuta({ usuario }) {
     }
   };
 
+  // Remover window.fetchAgendamentosComTempo e logs de tempo de resposta
+
   // -------------------------------
   // Renderização
   // -------------------------------
@@ -425,19 +427,36 @@ function AgendamentosMassoterapeuta({ usuario }) {
                       )}
                     </div>
                     {a.status === 'confirmado' && (
-                      <button 
-                        onClick={() => atualizarStatus(a.id, "concluido")}
-                        style={{ 
-                          padding: "8px 15px", 
-                          backgroundColor: "#007bff", 
-                          color: "white", 
-                          border: "none", 
-                          borderRadius: "4px",
-                          cursor: "pointer"
-                        }}
-                      >
-                        🏁 Marcar como Concluído
-                      </button>
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <button 
+                          onClick={() => atualizarStatus(a.id, "concluido")}
+                          style={{ 
+                            padding: "8px 15px", 
+                            backgroundColor: "#007bff", 
+                            color: "white", 
+                            border: "none", 
+                            borderRadius: "4px",
+                            cursor: "pointer"
+                          }}
+                        >
+                          🏁 Marcar como Concluído
+                        </button>
+
+                        {/* Botão para permitir cancelamento mesmo após confirmação */}
+                        <button
+                          onClick={() => abrirModalCancelamento(a)}
+                          style={{
+                            padding: "8px 15px",
+                            backgroundColor: "#dc3545",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer"
+                          }}
+                        >
+                          ❌ Cancelar
+                        </button>
+                      </div>
                     )}
                   </div>
                 ))}
