@@ -1,5 +1,4 @@
-// Modal de sucesso
-  const ModalSucesso = ({ onClose }) => (
+ const ModalSucesso = ({ onClose }) => (
     <div style={{
       position: 'fixed',
       top: 0,
@@ -40,107 +39,96 @@
       </div>
     </div>
   );
-// CadastroForm.jsx
-// Formulário exclusivo para CLIENTES se cadastrarem no sistema
-// Não permite cadastro de massoterapeutas - eles são cadastrados separadamente
 
-// Importação do React e hook useState
 import React, { useState } from "react";
 
-// Componente de formulário de cadastro para clientes
-// Recebe como prop: voltarLogin (função para retornar à tela de login)
 function CadastroForm({ voltarLogin }) {
-  // Estado para controlar visibilidade da senha
+
   const [mostrarSenha, setMostrarSenha] = useState(false);
   
   // -------------------------------
   // Estados para os campos do cliente
   // Cada campo do formulário tem seu próprio estado
   // -------------------------------
-  const [nome, setNome] = useState("");                    // Nome completo do cliente
-  const [telefone, setTelefone] = useState("");            // Telefone para contato
-  // Validação para aceitar apenas números no campo telefone
+  const [nome, setNome] = useState("");                    
+  const [telefone, setTelefone] = useState("");           
   const handleTelefoneChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ""); // Remove tudo que não for dígito
+    const value = e.target.value.replace(/\D/g, ""); 
     setTelefone(value);
   };
-  const [sexo, setSexo] = useState("");                    // Sexo: Masculino/Feminino
-  const [dataNascimento, setDataNascimento] = useState(""); // Data de nascimento
-  const [email, setEmail] = useState("");                  // Email para login e contato
+  const [sexo, setSexo] = useState("");                   
+  const [dataNascimento, setDataNascimento] = useState(""); 
+  const [email, setEmail] = useState("");                 
   // Força email para minúsculo ao digitar
   const handleEmailChange = (e) => {
     setEmail(e.target.value.toLowerCase());
   };
-  const [senha, setSenha] = useState("");                  // Senha para acesso
-  const [loading, setLoading] = useState(false);           // Evita duplo clique durante requisição
-  const [sucessoCadastro, setSucessoCadastro] = useState(false); // Exibe mensagem de sucesso
+  const [senha, setSenha] = useState("");                
+  const [loading, setLoading] = useState(false);           
+  const [sucessoCadastro, setSucessoCadastro] = useState(false); 
   // -------------------------------
   // Função para submeter cadastro
   // Processa o formulário e envia dados para o backend
   // -------------------------------
   const handleSubmit = async (e) => {
-    // Validação de senha forte no frontend
+
     const senhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{7,}$/.test(senha);
     if (!senhaForte) {
       alert("A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.");
       return;
     }
-    // Previne o comportamento padrão do formulário (recarregar página)
     e.preventDefault();
 
-    // Validação do campo sexo antes de enviar (apenas Masculino ou Feminino)
     if (!["Masculino", "Feminino"].includes(sexo)) {
       alert("Selecione um sexo válido: Masculino ou Feminino.");
-      return; // Para execução se validação falhar
+      return; 
     }
 
-    // Ativa estado de loading para feedback visual
     setLoading(true);
 
     try {
-      // Faz requisição POST para cadastrar cliente no backend
+   
   const resp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes", {
         method: "POST",
-        headers: { "Content-Type": "application/json" }, // Define que está enviando JSON
+        headers: { "Content-Type": "application/json" }, 
         body: JSON.stringify({
           nome,
           telefone,
           sexo,
-          data_nascimento: dataNascimento, // Converte camelCase para snake_case
+          data_nascimento: dataNascimento, 
           email,
           senha,
         }),
       });
 
-      // Verifica se cadastro foi bem-sucedido
       if (resp.ok) {
-        // Limpa todos os campos após cadastro bem-sucedido
+
         setNome("");
         setTelefone("");
         setSexo("");
         setDataNascimento("");
         setEmail("");
         setSenha("");
-        setSucessoCadastro(true); // Exibe mensagem de sucesso
+        setSucessoCadastro(true); 
       } else {
-        // Trata erros retornados pelo backend
+  
         let errMsg;
         try {
-          // Tenta extrair mensagem de erro do JSON
+      
           const errJson = await resp.json();
           errMsg = errJson.erro || errJson.message || JSON.stringify(errJson);
         } catch {
-          // Se não conseguir parsear JSON, pega texto da resposta
+     
           errMsg = await resp.text();
         }
-        alert(errMsg); // Mostra erro ao usuário
+        alert(errMsg); 
       }
     } catch (err) {
-      // Captura erros de rede ou outros erros inesperados
+    
       console.error("Erro no cadastro:", err);
       alert("Erro ao tentar cadastrar. Verifique sua conexão.");
     } finally {
-      // Sempre desativa loading, independente de sucesso ou erro
+    
       setLoading(false);
     }
   };
@@ -151,28 +139,25 @@ function CadastroForm({ voltarLogin }) {
   // -------------------------------
   return (
     <div className="form-container">
-      {/* Formulário principal com handler de submissão */}
       {sucessoCadastro && <ModalSucesso onClose={() => setSucessoCadastro(false)} />}
       <form onSubmit={handleSubmit} className="cadastro-form">
-        {/* Título do formulário */}
+
         <h2>Cadastro de Cliente</h2>
 
-        {/* Campo para nome completo */}
         <label>
           Nome:
           <input
             value={nome}
-            onChange={(e) => setNome(e.target.value)} // Atualiza estado a cada digitação
+            onChange={(e) => setNome(e.target.value)} 
             placeholder="Nome completo"
-            required // Campo obrigatório
+            required
           />
         </label>
 
-        {/* Campo para telefone */}
         <label>
           Telefone:
           <input
-            type="tel" // Tipo específico para telefone
+            type="tel" 
             value={telefone}
             onChange={handleTelefoneChange}
             placeholder="(xx) xxxxx-xxxx"
@@ -181,7 +166,6 @@ function CadastroForm({ voltarLogin }) {
           />
         </label>
 
-        {/* Seletor de sexo */}
         <label>
           Sexo:
           <select value={sexo} onChange={(e) => setSexo(e.target.value)} required>
@@ -191,22 +175,21 @@ function CadastroForm({ voltarLogin }) {
           </select>
         </label>
 
-        {/* Campo para data de nascimento */}
+
         <label>
           Data de Nascimento:
           <input
-            type="date" // Input nativo de data do HTML5
+            type="date" 
             value={dataNascimento}
             onChange={(e) => setDataNascimento(e.target.value)}
             required
           />
         </label>
 
-        {/* Campo para email */}
         <label>
           Email:
           <input
-            type="email" // Validação nativa de email
+            type="email" 
             value={email}
             onChange={handleEmailChange}
             placeholder="seuemail@exemplo.com"
@@ -214,18 +197,17 @@ function CadastroForm({ voltarLogin }) {
           />
         </label>
 
-        {/* Campo de senha com botão de mostrar/ocultar */}
 
         <label style={{ position: 'relative', display: 'block' }}>
           Senha:
           <div style={{ position: 'relative' }}>
-            {/* Input de senha que alterna entre texto e password */}
+          
             <input
               type={mostrarSenha ? "text" : "password"}
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               placeholder="Digite sua senha"
-              minLength={7} // Mínimo de 7 caracteres
+              minLength={7} 
               required
               style={{
                 paddingRight: '38px',
@@ -237,14 +219,14 @@ function CadastroForm({ voltarLogin }) {
                 outline: 'none',
                 transition: 'border-color 0.2s',
               }}
-              // Efeitos visuais de foco
+        
               onFocus={e => e.target.style.borderColor = '#1976d2'}
               onBlur={e => e.target.style.borderColor = '#ccc'}
             />
-            {/* Botão para alternar visibilidade da senha */}
+     
             <button
               type="button"
-              onClick={() => setMostrarSenha((v) => !v)} // Inverte estado atual
+              onClick={() => setMostrarSenha((v) => !v)}
               style={{
                 position: 'absolute',
                 right: 8,
@@ -257,26 +239,25 @@ function CadastroForm({ voltarLogin }) {
                 color: '#888',
                 padding: 0
               }}
-              tabIndex={-1} // Remove do tab order
+              tabIndex={-1}
               aria-label={mostrarSenha ? 'Esconder senha' : 'Mostrar senha'}
             >
-              {/* Ícones de olho para mostrar/ocultar */}
+        
               {mostrarSenha ? '🙈' : '👁️'}
             </button>
           </div>
         </label>
-        {/* Aviso de requisitos de senha abaixo do campo, visual mais discreto */}
+   
         <div style={{ color: '#ff9800', fontSize: '0.92rem', marginTop: '0.2rem', marginBottom: '0.7rem', textAlign: 'left', fontWeight: 500 }}>
           A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.
         </div>
      
-        {/* Botão de submissão */}
+ 
         <button type="submit" disabled={loading}>
-          {/* Texto dinâmico baseado no estado de loading */}
+     
           {loading ? "Cadastrando..." : "Cadastrar"}
         </button>
 
-        {/* Link para voltar ao login (estilizado) */}
         <div style={{ textAlign: 'center', marginTop: 14 }}>
           <span style={{ color: '#666', fontSize: '0.95rem' }}>Já tem conta?</span>
           <button
@@ -292,5 +273,5 @@ function CadastroForm({ voltarLogin }) {
     </div>
   );
 }
-// Exportação do componente
+
 export default CadastroForm;
