@@ -68,6 +68,7 @@ function CadastroForm({ voltarLogin }) {
   const [dataNascimento, setDataNascimento] = useState(""); // Data de nascimento
   const [email, setEmail] = useState("");                  // Email para login e contato
   const [senha, setSenha] = useState("");                  // Senha para acesso
+  const [senhaConfirm, setSenhaConfirm] = useState("");    // Confirmação de senha
   const [loading, setLoading] = useState(false);           // Evita duplo clique durante requisição
   const [sucessoCadastro, setSucessoCadastro] = useState(false); // Exibe mensagem de sucesso
   // -------------------------------
@@ -75,14 +76,21 @@ function CadastroForm({ voltarLogin }) {
   // Processa o formulário e envia dados para o backend
   // -------------------------------
   const handleSubmit = async (e) => {
+    // Previne o comportamento padrão do formulário (recarregar página)
+    e.preventDefault();
+
+    // Verifica se as senhas coincidem
+    if (senha !== senhaConfirm) {
+      alert("As senhas não coincidem. Por favor verifique.");
+      return;
+    }
+
     // Validação de senha forte no frontend
     const senhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{7,}$/.test(senha);
     if (!senhaForte) {
       alert("A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.");
       return;
     }
-    // Previne o comportamento padrão do formulário (recarregar página)
-    e.preventDefault();
 
     // Validação do campo sexo antes de enviar
     if (!["Masculino", "Feminino", "Outro"].includes(sexo)) {
@@ -116,7 +124,8 @@ function CadastroForm({ voltarLogin }) {
         setSexo("");
         setDataNascimento("");
         setEmail("");
-        setSenha("");
+          setSenha("");
+          setSenhaConfirm("");
         setSucessoCadastro(true); // Exibe mensagem de sucesso
       } else {
         // Trata erros retornados pelo backend
@@ -262,6 +271,53 @@ function CadastroForm({ voltarLogin }) {
             </button>
           </div>
         </label>
+        {/* Campo de confirmação de senha */}
+        <label style={{ position: 'relative', display: 'block', marginTop: 8 }}>
+          Confirmar Senha:
+          <div style={{ position: 'relative' }}>
+            <input
+              type={mostrarSenha ? "text" : "password"}
+              value={senhaConfirm}
+              onChange={(e) => setSenhaConfirm(e.target.value)}
+              placeholder="Repita sua senha"
+              minLength={7}
+              required
+              style={{
+                paddingRight: '38px',
+                width: '100%',
+                borderRadius: '8px',
+                border: '1px solid #ccc',
+                fontSize: '1rem',
+                boxSizing: 'border-box',
+                outline: 'none',
+                transition: 'border-color 0.2s',
+              }}
+              onFocus={e => e.target.style.borderColor = '#1976d2'}
+              onBlur={e => e.target.style.borderColor = '#ccc'}
+            />
+            <button
+              type="button"
+              onClick={() => setMostrarSenha((v) => !v)}
+              style={{
+                position: 'absolute',
+                right: 8,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: 18,
+                color: '#888',
+                padding: 0
+              }}
+              tabIndex={-1}
+              aria-label={mostrarSenha ? 'Esconder senha' : 'Mostrar senha'}
+            >
+              {mostrarSenha ? '🙈' : '👁️'}
+            </button>
+          </div>
+        </label>
+
         {/* Aviso de requisitos de senha abaixo do campo, visual mais discreto */}
         <div style={{ color: '#ff9800', fontSize: '0.92rem', marginTop: '0.2rem', marginBottom: '0.7rem', textAlign: 'left', fontWeight: 500 }}>
           A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.
