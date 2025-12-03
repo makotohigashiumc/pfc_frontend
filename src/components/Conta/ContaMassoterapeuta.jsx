@@ -1,13 +1,10 @@
-// ContaMassoterapeuta.jsx
-// Página de conta do MASSOTERAPEUTA (visualização e dados básicos)
-
 import React, { useEffect, useState } from "react";
 
 function ContaMassoterapeuta() {
   const [massoterapeuta, setMassoterapeuta] = useState(null);
 
   useEffect(() => {
-    // Busca os dados do massoterapeuta logado
+
     const fetchMassoterapeuta = async () => {
       try {
         const token = localStorage.getItem("token");
