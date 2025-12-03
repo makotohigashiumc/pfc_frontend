@@ -52,13 +52,13 @@ function PaginaInicial() {
         <div className="servicos-grid">
           <div className="servico-card">
             <div className="servico-icon">🦴</div>
-            <h3>Quiropraxía</h3>
+            <h3>Quiropraxia</h3>
             <p>Técnica de manipulação da coluna vertebral para correção de problemas posturais e alívio de dores.</p>
           </div>
           <div className="servico-card">
             <div className="servico-icon">🔵</div>
             <h3>Ventosaterapia</h3>
-            <p>Terapia com ventosas que estimula a circulação sanguínea e promove a desintoxicação do organismo.</p>
+            <p>Terapia com ventosas que estimula a circulação sanguínea e promove a desintoxicação ao longo da musculatura.</p>
           </div>
           <div className="servico-card">
             <div className="servico-icon">📍</div>
@@ -73,7 +73,7 @@ function PaginaInicial() {
           <div className="servico-card">
             <div className="servico-icon">🔥</div>
             <h3>Moxaterapia</h3>
-            <p>Técnica da medicina tradicional chinesa que utiliza calor para estimular pontos de acupuntura.</p>
+            <p>Técnica da medicina tradicional chinesa que utiliza o calor para estimular pontos de tensão e energia.</p>
           </div>
         </div>
       </section>
@@ -125,38 +125,7 @@ function PaginaInicial() {
         </div>
       </section>
 
-      {/* Seção de Depoimentos - feedback de clientes */}
-      <section className="depoimentos-section">
-        {/* Título da seção */}
-        <h2>O que Nossos Clientes Dizem</h2>
-        
-        {/* Grid com depoimentos */}
-        <div className="depoimentos-grid">
-          {/* Depoimento 1 */}
-          <div className="depoimento-card">
-            <div className="depoimento-texto">
-              "Excelente profissional! O agendamento online facilita muito e o atendimento é sempre pontual."
-            </div>
-            <div className="depoimento-autor">⭐⭐⭐⭐⭐ Maria Silva</div>
-          </div>
-          
-          {/* Depoimento 2 */}
-          <div className="depoimento-card">
-            <div className="depoimento-texto">
-              "Depois das sessões, minhas dores nas costas melhoraram significativamente. Recomendo!"
-            </div>
-            <div className="depoimento-autor">⭐⭐⭐⭐⭐ João Santos</div>
-          </div>
-          
-          {/* Depoimento 3 */}
-          <div className="depoimento-card">
-            <div className="depoimento-texto">
-              "Atendimento profissional e ambiente muito acolhedor. Sempre saio renovada!"
-            </div>
-            <div className="depoimento-autor">⭐⭐⭐⭐⭐ Ana Costa</div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Call to Action - chamada final para ação */}
       <section className="cta-section">

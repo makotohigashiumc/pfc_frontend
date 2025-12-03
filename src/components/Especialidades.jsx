@@ -17,34 +17,34 @@ function Especialidades() {
   };
   const especialidades = [
     {
-      nome: "Quiropraxía",
+      nome: "Quiropraxia",
       descricao: "Técnica de manipulação da coluna vertebral para correção de problemas posturais e alívio de dores.",
       icone: "🦴",
-      beneficios: ["Corrige postura", "Alinha coluna", "Reduz dores nas costas"]
+      beneficios: ["Equilíbrio e harmonização articular", "Alinha a coluna", "Elimina dores nas costas"]
     },
     {
       nome: "Ventosaterapia",
-      descricao: "Terapia com ventosas que estimula a circulação sanguínea e promove a desintoxicação do organismo.",
+      descricao: "Terapia com ventosas que estimula a circulação sanguínea e promove a desintoxicação ao longo da musculatura.",
       icone: "🔵",
-      beneficios: ["Melhora circulação", "Desintoxica", "Relaxa músculos"]
+      beneficios: ["Melhora a circulação", "Desintoxica", "Relaxa os músculos"]
     },
     {
       nome: "Acupuntura",
       descricao: "Técnica milenar chinesa que utiliza agulhas para equilibrar a energia do corpo e tratar diversos problemas.",
       icone: "📍",
-      beneficios: ["Equilibra energia", "Trata dores", "Melhora bem-estar"]
+      beneficios: ["Equilibra a energia vital", "Trata dores", "Melhora a circulação"]
     },
     {
       nome: "Shiatsu",
       descricao: "Massagem japonesa que utiliza pressão com os dedos para estimular pontos específicos do corpo.",
       icone: "👐",
-      beneficios: ["Estimula pontos", "Relaxa músculos", "Melhora energia"]
+      beneficios: ["Estimula pontos frágeis de tensão", "Relaxa os músculos", "Melhora o alinhamento de fibras musculares"]
     },
     {
       nome: "Moxaterapia",
-      descricao: "Técnica da medicina tradicional chinesa que utiliza calor para estimular pontos de acupuntura.",
-      icone: "�",
-      beneficios: ["Estimula pontos", "Aquece organismo", "Fortalece energia"]
+      descricao: "Técnica da medicina tradicional chinesa que utiliza o calor para estimular pontos de tensão e energia.",
+      icone: "🔥",
+      beneficios: ["Estimula pontos nevrálgicos", "Aquece pontos na inércia", "Fortalece o Qi de pontos específicos "]
     }
   ];
 
