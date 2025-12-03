@@ -40,6 +40,52 @@
       </div>
     </div>
   );
+  // Modal para exibir Termos de Uso específicos para agendamento de massoterapia
+  const ModalTermos = ({ onClose }) => (
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+      <div style={{ background: '#fff', padding: 24, borderRadius: 10, width: 'min(900px, 96vw)', maxHeight: '84vh', overflow: 'auto' }}>
+        <h3 style={{ marginTop: 0 }}>Termos de Uso</h3>
+        <div style={{ color: '#333', lineHeight: 1.5 }}>
+          <p><strong>1. Objeto</strong><br/>Estes Termos regulam o uso do site e da Plataforma de agendamento de massoterapia ("Plataforma"), que permite o agendamento, reagendamento e cancelamento de sessões com profissionais cadastrados.</p>
+          <p><strong>2. Cadastro e veracidade</strong><br/>O Usuário concorda em fornecer informações verdadeiras e atualizadas. A conta é pessoal e intransferível. O Usuário é responsável por manter a confidencialidade de suas credenciais.</p>
+          <p><strong>3. Agendamentos</strong><br/>Ao agendar, o Usuário assume a responsabilidade de fornecer informações relevantes (como contraindicações e condições de saúde). O horário reservado depende da disponibilidade do profissional.</p>
+          <p><strong>4. Cancelamento e reagendamento</strong><br/>Políticas de cancelamento são definidas pelo profissional ou estabelecimento e são apresentadas no fluxo de agendamento. Podem existir prazos para cancelamento sem custo e taxas para cancelamentos tardios.</p>
+          <p><strong>5. Pagamentos</strong><br/>Quando aplicável, o preço dos serviços e as condições de pagamento serão informados no momento da reserva. O processamento de pagamento pode ser realizado por terceiros; consulte os termos do provedor de pagamento.</p>
+          <p><strong>6. Responsabilidade</strong><br/>A Plataforma atua como intermediária. Não nos responsabilizamos por condutas dos profissionais, diagnósticos, tratamentos ou resultados das sessões. O Usuário deve seguir orientações médicas quando necessário.</p>
+          <p><strong>7. Conduta</strong><br/>É proibido o uso da Plataforma para fins ilegais, assédio ou condutas que coloquem em risco outras pessoas. Violações podem resultar em suspensão ou cancelamento de conta.</p>
+          <p><strong>8. Propriedade intelectual</strong><br/>O conteúdo da Plataforma é protegido por direitos autorais. Não é permitida reprodução sem autorização.</p>
+          <p><strong>9. Alterações</strong><br/>Podemos alterar estes Termos. Mudanças relevantes serão notificadas e o uso continuado da Plataforma constituirá aceitação.</p>
+          <p><strong>10. Lei aplicável</strong><br/>Estes Termos são regidos pela legislação brasileira; o foro aplicável será o definido para resolução de disputas.</p>
+          <p style={{ marginTop: 12 }}><em>Marque a caixa "Aceito os Termos de Uso" para prosseguir com o cadastro.</em></p>
+        </div>
+        <div style={{ textAlign: 'right', marginTop: 12 }}>
+          <button onClick={onClose} style={{ background: '#1976d2', color: '#fff', border: 'none', padding: '8px 14px', borderRadius: 6 }}>Fechar</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Modal para exibir Política de Privacidade específica para a Plataforma
+  const ModalPolitica = ({ onClose }) => (
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+      <div style={{ background: '#fff', padding: 24, borderRadius: 10, width: 'min(900px, 96vw)', maxHeight: '84vh', overflow: 'auto' }}>
+        <h3 style={{ marginTop: 0 }}>Política de Privacidade</h3>
+        <div style={{ color: '#333', lineHeight: 1.5 }}>
+          <p><strong>1. Dados coletados</strong><br/>Coletamos dados fornecidos pelo Usuário (nome, e-mail, telefone, data de nascimento, informações de saúde relevantes), bem como dados técnicos (IP, dispositivo, dados de uso) para operação da Plataforma.</p>
+          <p><strong>2. Finalidades</strong><br/>Os dados são usados para: viabilizar agendamentos; enviar confirmações e lembretes; melhorar a Plataforma; cumprir obrigações legais.</p>
+          <p><strong>3. Compartilhamento</strong><br/>Compartilhamos informações necessárias com profissionais e estabelecimentos para execução do serviço. Também podemos compartilhar com provedores de pagamento e serviços terceirizados que operam a Plataforma, sempre com contratos que exigem proteção dos dados.</p>
+          <p><strong>4. Segurança</strong><br/>Adotamos medidas técnicas e administrativas para proteger os dados. Contudo, nenhuma transmissão pela Internet é totalmente segura.</p>
+          <p><strong>5. Retenção</strong><br/>Reteremos dados enquanto necessários para as finalidades descritas, observando prazos legais. Quando não mais necessários, os dados serão eliminados ou anonimizados.</p>
+          <p><strong>6. Direitos</strong><br/>O Usuário pode solicitar acesso, correção, exclusão, limitação ao tratamento, portabilidade dos dados e retirar consentimento, quando aplicável. Solicitações devem ser feitas via contato disponível na Plataforma.</p>
+          <p><strong>7. Cookies</strong><br/>Utilizamos cookies para melhorar a experiência e coletar estatísticas de uso. É possível controlar cookies pelo navegador.</p>
+          <p style={{ marginTop: 12 }}><em>Ao marcar "Aceito a Política de Privacidade" você concorda com o tratamento de dados conforme descrito.</em></p>
+        </div>
+        <div style={{ textAlign: 'right', marginTop: 12 }}>
+          <button onClick={onClose} style={{ background: '#1976d2', color: '#fff', border: 'none', padding: '8px 14px', borderRadius: 6 }}>Fechar</button>
+        </div>
+      </div>
+    </div>
+  );
 // CadastroForm.jsx
 // Formulário exclusivo para CLIENTES se cadastrarem no sistema
 // Não permite cadastro de massoterapeutas - eles são cadastrados separadamente
@@ -69,6 +115,10 @@ function CadastroForm({ voltarLogin }) {
   const [email, setEmail] = useState("");                  // Email para login e contato
   const [senha, setSenha] = useState("");                  // Senha para acesso
   const [senhaConfirm, setSenhaConfirm] = useState("");    // Confirmação de senha
+  const [termosChecked, setTermosChecked] = useState(false); // Checkbox termos de uso
+  const [politicaChecked, setPoliticaChecked] = useState(false); // Checkbox política de privacidade
+  const [showModalTermos, setShowModalTermos] = useState(false);
+  const [showModalPolitica, setShowModalPolitica] = useState(false);
   const [loading, setLoading] = useState(false);           // Evita duplo clique durante requisição
   const [sucessoCadastro, setSucessoCadastro] = useState(false); // Exibe mensagem de sucesso
   // -------------------------------
@@ -82,6 +132,12 @@ function CadastroForm({ voltarLogin }) {
     // Verifica se as senhas coincidem
     if (senha !== senhaConfirm) {
       alert("As senhas não coincidem. Por favor verifique.");
+      return;
+    }
+
+    // Verifica se o usuário aceitou os Termos e a Política
+    if (!termosChecked || !politicaChecked) {
+      alert("Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar.");
       return;
     }
 
@@ -126,6 +182,10 @@ function CadastroForm({ voltarLogin }) {
         setEmail("");
           setSenha("");
           setSenhaConfirm("");
+          setTermosChecked(false);
+          setPoliticaChecked(false);
+          setShowModalPolitica(false);
+          setShowModalTermos(false);
         setSucessoCadastro(true); // Exibe mensagem de sucesso
       } else {
         // Trata erros retornados pelo backend
@@ -158,6 +218,8 @@ function CadastroForm({ voltarLogin }) {
     <div className="form-container">
       {/* Formulário principal com handler de submissão */}
       {sucessoCadastro && <ModalSucesso onClose={() => setSucessoCadastro(false)} />}
+      {showModalTermos && <ModalTermos onClose={() => setShowModalTermos(false)} />}
+      {showModalPolitica && <ModalPolitica onClose={() => setShowModalPolitica(false)} />}
       <form onSubmit={handleSubmit} className="cadastro-form">
         {/* Título do formulário */}
         <h2>Cadastro de Cliente</h2>
@@ -322,7 +384,25 @@ function CadastroForm({ voltarLogin }) {
         <div style={{ color: '#ff9800', fontSize: '0.92rem', marginTop: '0.2rem', marginBottom: '0.7rem', textAlign: 'left', fontWeight: 500 }}>
           A senha deve ter no mínimo 7 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.
         </div>
-     
+        {/* Checkboxes para Termos e Política */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8, marginBottom: 8 }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <input type="checkbox" checked={termosChecked} onChange={(e) => setTermosChecked(e.target.checked)} />
+            <span style={{ fontSize: '0.95rem' }}>
+              Aceito os
+              <button type="button" onClick={(e) => { e.preventDefault(); setShowModalTermos(true); }} style={{ background: 'none', border: 'none', color: '#1976d2', marginLeft: 6, cursor: 'pointer' }}>Termos de Uso</button>
+            </span>
+          </label>
+
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <input type="checkbox" checked={politicaChecked} onChange={(e) => setPoliticaChecked(e.target.checked)} />
+            <span style={{ fontSize: '0.95rem' }}>
+              Aceito a
+              <button type="button" onClick={(e) => { e.preventDefault(); setShowModalPolitica(true); }} style={{ background: 'none', border: 'none', color: '#1976d2', marginLeft: 6, cursor: 'pointer' }}>Política de Privacidade</button>
+            </span>
+          </label>
+        </div>
+
         {/* Botão de submissão */}
         <button type="submit" disabled={loading}>
           {/* Texto dinâmico baseado no estado de loading */}
