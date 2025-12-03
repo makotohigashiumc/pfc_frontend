@@ -1,12 +1,10 @@
 // Importação do React
 import React, { useState } from "react";
 import { enviarMensagemContato } from "../services/Api";
-import "./PaginaInicial.css"; // Importa estilos CSS
+import "./PaginaInicial.css"; 
 
-// Componente de página de contato
-// Exibe informações de contato, formulário e detalhes da clínica
 function Contato() {
-  // Verifica se existe um usuário logado e obtém nome, email e telefone caso seja cliente
+
   let usuarioLogado = null;
   let emailUsuarioLogado = null;
   let nomeUsuarioLogado = null;
@@ -23,7 +21,7 @@ function Contato() {
       telefoneUsuarioLogado = u.telefone || u.telefone_celular || u.celular || null;
     }
   } catch (err) {
-    // se parsing falhar, consideramos usuário não logado
+
     usuarioLogado = null;
     emailUsuarioLogado = null;
     nomeUsuarioLogado = null;
@@ -41,7 +39,7 @@ function Contato() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState(""); // "success" ou "error"
+  const [messageType, setMessageType] = useState(""); 
 
   // ===== FUNÇÃO PARA ATUALIZAR CAMPOS =====
   const handleChange = (e) => {
@@ -52,25 +50,24 @@ function Contato() {
     }));
   };
 
-  // ===== FUNÇÃO PARA ENVIAR FORMULÁRIO =====
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
 
     try {
-      // Validação básica no front-end
-      // Se o usuário estiver logado, usamos os dados cadastrados e não exigimos os campos no formulário
+      
       if (!formData.assunto.trim() || !formData.mensagem.trim()) {
         throw new Error("Por favor, preencha todos os campos obrigatórios.");
       }
 
-      // Se não houver email no usuário logado, ainda exigimos que o campo seja preenchido
+      
       if (!isClienteLogado && (!formData.nome.trim() || !formData.email.trim())) {
         throw new Error("Por favor, preencha nome e e-mail para contato.");
       }
 
-      // Prepara payload usando dados do usuário logado quando disponíveis
+ 
       const payload = {
         nome: nomeUsuarioLogado || formData.nome,
         email: emailUsuarioLogado || formData.email,
@@ -79,14 +76,14 @@ function Contato() {
         mensagem: formData.mensagem
       };
 
-      // Envia dados para a API
+
       const response = await enviarMensagemContato(payload);
       
-      // Sucesso
+
       setMessage(response.mensagem);
       setMessageType("success");
       
-      // Limpa o formulário (não é necessário limpar email logado)
+   
       setFormData({
         nome: "",
         email: "",
@@ -105,42 +102,42 @@ function Contato() {
   };
   return (
     <div className="contato-container">
-      {/* Cabeçalho da página de contato */}
+
       <div className="contato-header">
         <h1>Entre em Contato</h1>
         <p>Estamos aqui para esclarecer suas dúvidas e ajudar no que precisar</p>
       </div>
 
-      {/* Conteúdo principal dividido em informações e formulário */}
+   
       <div className="contato-content">
-        {/* Seção com informações de contato */}
+   
         <div className="contato-info">
           <h2>Fale Conosco</h2>
           <p>Nossa equipe está sempre disponível para oferecer suporte, esclarecer dúvidas sobre tratamentos ou ajudar com agendamentos.</p>
           
-          {/* Item de contato: E-mail */}
+   
           <div className="contato-item">
             <div className="contato-icone">📧</div>
             <div className="contato-detalhes">
               <h3>E-mail</h3>
-              {/* Link clicável que abre cliente de email */}
+         
               <a href="mailto:hmmassoterapia7@gmail.com">hmmassoterapia7@gmail.com</a>
               <p>Resposta em até 24 horas</p>
             </div>
           </div>
 
-          {/* Item de contato: Telefone */}
+      
           <div className="contato-item">
             <div className="contato-icone">📞</div>
             <div className="contato-detalhes">
               <h3>Telefone</h3>
-              {/* Link clicável que abre discador do telefone */}
+          
               <a href="tel:+5511999430693">(11) 99943-0693</a>
               <p>Seg à Sex: 8h às 18h</p>
             </div>
           </div>
 
-          {/* Item de contato: Endereço físico */}
+     
           <div className="contato-item">
             <div className="contato-icone">📍</div>
             <div className="contato-detalhes">
@@ -149,12 +146,12 @@ function Contato() {
             </div>
           </div>
 
-          {/* Item de contato: Redes sociais */}
+     
           <div className="contato-item">
             <div className="contato-icone">📸</div>
             <div className="contato-detalhes">
               <h3>Redes Sociais</h3>
-              {/* Link para Instagram (target="_blank" abre em nova aba) */}
+         
               <a href="" target="_blank" rel="noopener noreferrer">
                 @hmmassoterapia
               </a>
@@ -163,20 +160,17 @@ function Contato() {
           </div>
         </div>
 
-        {/* Seção do formulário de contato */}
         <div className="contato-formulario">
           <h2>Envie uma Mensagem</h2>
           
-          {/* Mensagem de feedback */}
           {message && (
             <div className={`message ${messageType}`}>
               {message}
             </div>
           )}
           
-          {/* Formulário para envio de mensagens */}
           <form className="formulario-contato" onSubmit={handleSubmit}>
-            {/* Campo Nome - só exibe quando usuário não está logado */}
+      
             {!isClienteLogado && (
               <div className="form-group">
                 <label htmlFor="nome">Nome Completo</label>
@@ -192,7 +186,6 @@ function Contato() {
               </div>
             )}
             
-            {/* Campo Email: só exibe quando usuário não está logado */}
             {!isClienteLogado && (
               <div className="form-group">
                 <label htmlFor="email">E-mail</label>
@@ -208,7 +201,6 @@ function Contato() {
               </div>
             )}
             
-            {/* Campo Telefone (opcional) - só exibe quando usuário não está logado */}
             {!isClienteLogado && (
               <div className="form-group">
                 <label htmlFor="telefone">Telefone</label>
@@ -223,7 +215,7 @@ function Contato() {
               </div>
             )}
             
-            {/* Seletor de Assunto */}
+
             <div className="form-group">
               <label htmlFor="assunto">Assunto</label>
               <select 
@@ -243,7 +235,7 @@ function Contato() {
               </select>
             </div>
             
-            {/* Campo de Mensagem */}
+       
             <div className="form-group">
               <label htmlFor="mensagem">Mensagem</label>
               <textarea 
@@ -258,7 +250,7 @@ function Contato() {
               ></textarea>
             </div>
             
-            {/* Botão de envio */}
+       
             <button 
               type="submit" 
               className="btn-enviar"
@@ -270,24 +262,22 @@ function Contato() {
         </div>
       </div>
 
-      {/* Seção de horários de funcionamento */}
+  
       <div className="contato-horarios">
         <h2>Horários de Funcionamento</h2>
-        {/* Grid com horários organizados */}
+   
         <div className="horarios-grid">
-          {/* Horário de segunda a quinta */}
+      
           <div className="horario-item">
             <span className="dia">Segunda à Quinta</span>
             <span className="hora">8h às 18h</span>
           </div>
-          
-          {/* Horário de sexta */}
+        
           <div className="horario-item">
             <span className="dia">Sexta</span>
             <span className="hora">Fechado</span>
           </div>
           
-          {/* Horário de final de semana */}
           <div className="horario-item">
             <span className="dia">Sábado e Domingo</span>
             <span className="hora">Fechado</span>
@@ -298,5 +288,4 @@ function Contato() {
   );
 }
 
-// Exportação do componente
 export default Contato;

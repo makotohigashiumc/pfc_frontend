@@ -1,39 +1,29 @@
-// AgendamentosCliente.jsx
-// Componente principal para gerenciamento de agendamentos do cliente
-// Permite agendar novas consultas, visualizar agendamentos existentes e cancelar
-
-// Importações necessárias
 import React, { useState, useEffect, useCallback } from "react";
-import DatePicker, { registerLocale } from "react-datepicker"; // Componente de seleção de data
-import "react-datepicker/dist/react-datepicker.css"; // Estilos do DatePicker
-import ptBR from "date-fns/locale/pt-BR"; // Localização em português
+import DatePicker, { registerLocale } from "react-datepicker"; 
+import "react-datepicker/dist/react-datepicker.css"; 
+import ptBR from "date-fns/locale/pt-BR"; 
 
-// Registra o locale português brasileiro para o DatePicker
+
 registerLocale("pt-BR", ptBR);
 
-// Componente principal para agendamentos do cliente
-// Recebe como props: usuario (dados do cliente) e token (autenticação)
 function AgendamentosCliente({ usuario, token }) {
-  // Função que gera lista de horários disponíveis para o dia selecionado
-  // Marca horários ocupados e horários que já passaram como indisponíveis
+  
   const gerarHorariosDiaSelecionado = () => {
-    // Se não há data selecionada, retorna lista vazia
+   
     if (!dataHora) return [];
 
     const horarios = [];
-    const base = new Date(dataHora); // Data base selecionada pelo usuário
-    base.setHours(8, 0, 0, 0); // Define horário inicial (8:00)
+    const base = new Date(dataHora); 
+    base.setHours(8, 0, 0, 0); 
 
-    const agora = new Date(); // Horário atual do sistema
-    const tempoMinimo = new Date(agora.getTime() + 30 * 60000); // 30 min de antecedência mínima
+    const agora = new Date(); 
+    const tempoMinimo = new Date(agora.getTime() + 30 * 60000); 
 
-    // Gera horários de 8:00 às 18:00 com intervalos de 1h, exceto 12:00, 13:00 e 14:00
     const horariosPermitidos = [8, 9, 10, 11, 15, 16, 17, 18];
     for (let h of horariosPermitidos) {
       const horario = new Date(base);
       horario.setHours(h, 0, 0, 0);
 
-      // Verifica se este horário está ocupado consultando a lista de horários ocupados
       const ocupado = horariosOcupados.some((ho) =>
         ho.getFullYear() === horario.getFullYear() &&
         ho.getMonth() === horario.getMonth() &&
@@ -41,57 +31,50 @@ function AgendamentosCliente({ usuario, token }) {
         ho.getHours() === horario.getHours() &&
         ho.getMinutes() === horario.getMinutes()
       );
-  {/* Modal de cancelamento */}
-      // Verifica se é horário passado ou muito próximo (menos de 30 min)
+ 
       const horarioIndisponivel = horario < tempoMinimo;
 
-      // Adiciona o horário à lista marcando se está ocupado ou indisponível
       horarios.push({ horario, ocupado: ocupado || horarioIndisponivel });
     }
-    return horarios; // Retorna lista completa de horários com status
+    return horarios; 
   };
   
-  // Token de autenticação - prioriza prop, depois usuario.token, por último localStorage
   const authToken = token || usuario?.token || localStorage.getItem("token");
   
   // ================================
   // DECLARAÇÃO DOS ESTADOS
   // ================================
-  const [dataHora, setDataHora] = useState(null);              // Data e hora selecionadas para agendamento
-  const [historico, setHistorico] = useState([]);              // Lista de agendamentos do cliente
-  const [massoterapeutas, setMassoterapeutas] = useState([]);  // Lista de massoterapeutas disponíveis
-  const [massoterapeutaSelecionado, setMassoterapeutaSelecionado] = useState(""); // ID do massoterapeuta escolhido
-  const [horariosOcupados, setHorariosOcupados] = useState([]); // Lista de horários já agendados (objetos Date)
-  const [forceUpdate, setForceUpdate] = useState(0);           // Contador para forçar re-render dos horários
-  const [horarioAtual, setHorarioAtual] = useState(new Date()); // Horário atual para verificações de disponibilidade
-  const [sintomas, setSintomas] = useState("");               // Sintomas relatados pelo cliente
-  // Modal exibido após solicitar agendamento (aguardando confirmação da clínica)
+  const [dataHora, setDataHora] = useState(null);              
+  const [historico, setHistorico] = useState([]);             
+  const [massoterapeutas, setMassoterapeutas] = useState([]);  
+  const [massoterapeutaSelecionado, setMassoterapeutaSelecionado] = useState(""); 
+  const [horariosOcupados, setHorariosOcupados] = useState([]); 
+  const [forceUpdate, setForceUpdate] = useState(0);           
+  const [horarioAtual, setHorarioAtual] = useState(new Date()); 
+  const [sintomas, setSintomas] = useState("");               
   const [modalAguardando, setModalAguardando] = useState({ aberto: false });
   
   // ================================
   // EFEITOS (useEffect)
   // ================================
   
-  // Effect para atualizar horários e relógio em tempo real
-  // Garante que horários passados sejam marcados como indisponíveis
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setHorarioAtual(new Date());      // Atualiza horário atual
-      setForceUpdate(prev => prev + 1); // Força re-render dos componentes
-    }, 60000); // Atualiza a cada 1 minuto
+      setHorarioAtual(new Date());     
+      setForceUpdate(prev => prev + 1); 
+    }, 60000); 
     
-    // Cleanup: remove o interval quando componente é desmontado
     return () => clearInterval(interval);
   }, []);
   
-  // Função para buscar horários ocupados do massoterapeuta selecionado
-  // Usa useCallback para evitar re-renders desnecessários
+
   const fetchHorariosOcupados = useCallback(async (data) => {
-    // Se não há massoterapeuta selecionado, limpa a lista
+   
     if (!massoterapeutaSelecionado) return setHorariosOcupados([]);
     
     try {
-      // Faz requisição para obter horários ocupados do massoterapeuta
+    
   const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/massoterapeuta/horarios_ocupados/${massoterapeutaSelecionado}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${authToken}` },
@@ -100,21 +83,21 @@ function AgendamentosCliente({ usuario, token }) {
       if (resp.ok) {
         const data = await resp.json();
         
-        // Converte strings de data/hora para objetos Date
+      
         setHorariosOcupados(
           data.map((h) => new Date(h.data_hora))
         );
       } else {
-        // Em caso de erro, limpa a lista
+   
         setHorariosOcupados([]);
       }
     } catch {
-      // Em caso de erro de rede, limpa a lista
+    
       setHorariosOcupados([]);
     }
-  }, [massoterapeutaSelecionado, authToken]); // Dependências: recria quando estes valores mudam
+  }, [massoterapeutaSelecionado, authToken]); 
 
-  // Effect que atualiza horários ocupados quando massoterapeuta muda
+  
   useEffect(() => {
     fetchHorariosOcupados();
   }, [massoterapeutaSelecionado, fetchHorariosOcupados]);
@@ -194,9 +177,9 @@ function AgendamentosCliente({ usuario, token }) {
     if (!authToken) return alert("Você precisa estar logado para agendar.");
     if (!dataHora) return alert("Escolha data e hora");
     if (!massoterapeutaSelecionado) return alert("Escolha um massoterapeuta");
-    // Bloqueia agendamento para horários passados e com pouca antecedência
+ 
     const agora = new Date();
-    const tempoMinimo = new Date(agora.getTime() + 30 * 60000); // 30 minutos de antecedência
+    const tempoMinimo = new Date(agora.getTime() + 30 * 60000); 
     
     if (dataHora < agora) {
       alert("Não é possível agendar para horários passados.");
@@ -207,7 +190,7 @@ function AgendamentosCliente({ usuario, token }) {
       alert("Por favor, agende com pelo menos 30 minutos de antecedência.");
       return;
     }
-  // Envia o horário como string local (YYYY-MM-DDTHH:mm:ss)
+
   const pad = n => n.toString().padStart(2, '0');
   const dataHoraLocal = `${dataHora.getFullYear()}-${pad(dataHora.getMonth()+1)}-${pad(dataHora.getDate())}T${pad(dataHora.getHours())}:${pad(dataHora.getMinutes())}:00`;
 
@@ -226,12 +209,12 @@ function AgendamentosCliente({ usuario, token }) {
       });
 
       if (resp.ok) {
-        // Abre modal informando que o agendamento foi solicitado e está aguardando confirmação
+      
         setModalAguardando({ aberto: true });
         setDataHora("");
         setSintomas("");
 
-        // Atualiza histórico
+
   const historicoResp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
           method: "GET",
           headers: { Authorization: `Bearer ${authToken}` },
@@ -249,7 +232,6 @@ function AgendamentosCliente({ usuario, token }) {
     }
   };
 
-  // Modal de cancelamento
   const [modalCancelamento, setModalCancelamento] = useState({ aberto: false, agendamentoId: null });
   const [motivoCancelamento, setMotivoCancelamento] = useState("");
 
@@ -282,7 +264,7 @@ function AgendamentosCliente({ usuario, token }) {
       if (resp.ok) {
         alert("Agendamento cancelado com sucesso!");
         fecharModalCancelamento();
-        // Atualiza histórico
+ 
         const historicoResp = await fetch(import.meta.env.VITE_API_BASE_URL + "/clientes/agendamentos", {
           method: "GET",
           headers: { Authorization: `Bearer ${authToken}` },
@@ -359,16 +341,15 @@ function AgendamentosCliente({ usuario, token }) {
           minDate={new Date()}
           locale="pt-BR"
           showWeekNumbers={false}
-          firstDayOfWeek={1} // Segunda-feira como primeiro dia
-          calendarStartDay={1} // Inicia na segunda-feira
+          firstDayOfWeek={1} 
+          calendarStartDay={1} 
           filterDate={(date) => {
             const today = new Date();
             today.setHours(0,0,0,0);
             const d = new Date(date);
             d.setHours(0,0,0,0);
-            const day = d.getDay(); // 0=domingo, 1=segunda, ..., 6=sábado
-            // Só permite datas futuras (>= hoje) e dias úteis (seg a qui)
-            // Bloqueia explicitamente sexta (5), sábado (6) e domingo (0)
+            const day = d.getDay(); 
+           
             return d >= today && day >= 1 && day <= 4;
           }}
           dayClassName={(date) => {
@@ -376,15 +357,15 @@ function AgendamentosCliente({ usuario, token }) {
             today.setHours(0,0,0,0);
             const d = new Date(date);
             d.setHours(0,0,0,0);
-            const day = d.getDay(); // 0=domingo, 1=segunda, ..., 6=sábado
+            const day = d.getDay(); 
             if (d < today) return "dia-semana bloqueado";
-            if (day === 0) return "dia-semana bloqueado"; // domingo
+            if (day === 0) return "dia-semana bloqueado"; 
             if (day === 1) return "dia-semana segunda";
             if (day === 2) return "dia-semana terca";
             if (day === 3) return "dia-semana quarta";
             if (day === 4) return "dia-semana quinta";
-            if (day === 5) return "dia-semana bloqueado"; // sexta
-            if (day === 6) return "dia-semana bloqueado"; // sábado
+            if (day === 5) return "dia-semana bloqueado"; 
+            if (day === 6) return "dia-semana bloqueado"; 
             return "dia-semana bloqueado";
           }}
           renderCustomHeader={({ monthDate, decreaseMonth, increaseMonth }) => (
@@ -415,7 +396,7 @@ function AgendamentosCliente({ usuario, token }) {
                   background: ocupado
                     ? '#ccc'
                     : (dataHora && horario.getTime() === dataHora.getTime()
-                        ? '#90caf9' // Azul claro para selecionado
+                        ? '#90caf9' 
                         : '#e0f0ff'),
                   color: ocupado ? '#888' : '#1976d2',
                   border: ocupado ? '1px solid #bbb' : '1px solid #1976d2',
@@ -442,7 +423,7 @@ function AgendamentosCliente({ usuario, token }) {
           )}
         </div>
       )}
-      {/* Modal de aguardando confirmação */}
+    
       {modalAguardando.aberto && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)',
@@ -505,7 +486,7 @@ function AgendamentosCliente({ usuario, token }) {
             )}
           </li>
         ))}
-      {/* Modal de cancelamento */}
+   
       {modalCancelamento.aberto && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)',
@@ -539,10 +520,9 @@ function AgendamentosCliente({ usuario, token }) {
 export default AgendamentosCliente;
 
 
-// Função para formatar data/hora para o padrão brasileiro
 function formatarDataHora(dataHoraStr) {
   if (!dataHoraStr) return "";
-  // Sempre exibe no horário local do Brasil
+ 
   const d = new Date(dataHoraStr);
   if (isNaN(d.getTime())) return "Data inválida";
   return d.toLocaleString('pt-BR', {
@@ -555,7 +535,7 @@ function formatarDataHora(dataHoraStr) {
   });
 }
 
-// Função para traduzir status para português
+
 function traduzirStatus(status) {
   switch (status) {
     case 'pendente': return 'Aguardando confirmação da clínica';

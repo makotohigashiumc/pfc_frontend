@@ -1,6 +1,3 @@
-// PerfilMassoterapeuta.jsx
-// Componente para o massoterapeuta editar/visualizar suas informações pessoais
-
 import React, { useState } from "react";
 
 function PerfilMassoterapeuta({ usuario, token }) {
@@ -11,7 +8,7 @@ function PerfilMassoterapeuta({ usuario, token }) {
   const [loading, setLoading] = useState(false);
 
   const salvar = async () => {
-    // sanitiza telefone removendo tudo que não for dígito
+
     const telefoneSanitizado = telefone ? telefone.replace(/\D/g, "") : "";
 
     if (!nome.trim() || !telefoneSanitizado.trim()) {
@@ -33,7 +30,7 @@ function PerfilMassoterapeuta({ usuario, token }) {
       if (resp.ok) {
         alert("Informações atualizadas com sucesso!");
         setEditando(false);
-        // Atualiza os dados do usuário no estado local
+ 
         usuario.nome = nome;
         usuario.telefone = telefoneSanitizado;
       } else {

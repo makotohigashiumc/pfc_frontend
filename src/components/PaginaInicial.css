@@ -5,7 +5,6 @@
   padding: 0 20px;
 }
 
-/* Hero Section */
 .hero-section {
   display: flex;
   align-items: center;
@@ -98,7 +97,6 @@
   50% { transform: translateY(-20px); }
 }
 
-/* Seção de Serviços */
 .servicos-section {
   margin-bottom: 80px;
   text-align: center;
@@ -150,7 +148,6 @@
   font-size: 1rem;
 }
 
-/* Seção de Benefícios */
 .beneficios-section {
   background: linear-gradient(135deg, #107594 0%, #0a5b64 100%);
   color: white;
@@ -159,7 +156,6 @@
   margin-bottom: 80px;
 }
 
-/* Força todos os textos da seção de benefícios para branco */
 .beneficios-section * {
   color: white !important;
 }
@@ -206,7 +202,6 @@
   color: white !important;
 }
 
-/* Seção de Depoimentos */
 .depoimentos-section {
   margin-bottom: 80px;
   text-align: center;
@@ -363,14 +358,12 @@
 
 /* ===== ESTILOS PARA FORMULÁRIO DE CONTATO ===== */
 
-/* Container do formulário de contato */
 .contato-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* Cabeçalho da página de contato */
 .contato-header {
   text-align: center;
   margin-bottom: 60px;
@@ -390,7 +383,6 @@
   margin: 0 auto;
 }
 
-/* Layout principal do conteúdo */
 .contato-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -398,7 +390,6 @@
   margin-bottom: 60px;
 }
 
-/* Seção de informações de contato */
 .contato-info h2 {
   font-size: 2rem;
   color: #107594;
@@ -413,7 +404,6 @@
   line-height: 1.6;
 }
 
-/* Item individual de contato */
 .contato-item {
   display: flex;
   align-items: flex-start;
@@ -455,7 +445,6 @@
   font-size: 0.9rem;
 }
 
-/* Seção do formulário */
 .contato-formulario h2 {
   font-size: 2rem;
   color: #107594;
@@ -463,7 +452,6 @@
   font-weight: 600;
 }
 
-/* Mensagens de feedback */
 .message {
   padding: 15px 20px;
   border-radius: 8px;
@@ -496,7 +484,6 @@
   }
 }
 
-/* Formulário de contato */
 .formulario-contato {
   display: flex;
   flex-direction: column;
@@ -547,7 +534,6 @@
   min-height: 120px;
 }
 
-/* Botão de envio */
 .btn-enviar {
   background: linear-gradient(135deg, #107594 0%, #0a5b64 100%);
   color: white;
@@ -574,7 +560,6 @@
   box-shadow: none;
 }
 
-/* Seções adicionais */
 .contato-mapa,
 .contato-horarios {
   margin-bottom: 50px;
@@ -603,7 +588,6 @@
   margin: 10px 0;
 }
 
-/* Grid de horários */
 .horarios-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -660,7 +644,6 @@
 
 /* ===== ESTILOS PARA FORMULÁRIO DE CONTATO ===== */
 
-/* Mensagens de feedback */
 .message {
   padding: 15px;
   border-radius: 8px;
@@ -683,7 +666,6 @@
   border-left-color: #dc3545;
 }
 
-/* Animação para as mensagens */
 @keyframes slideInDown {
   from {
     opacity: 0;
@@ -695,7 +677,6 @@
   }
 }
 
-/* Estilos para formulário desabilitado */
 .formulario-contato input:disabled,
 .formulario-contato select:disabled,
 .formulario-contato textarea:disabled {

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PoliticaPrivacidade from "./components/PoliticaPrivacidade";
-// Main já contém lógica para detectar /confirmar-email/* e /redefinir-senha
-// Importação dos componentes principais da aplicação
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 import "./App.css";

@@ -2,26 +2,26 @@ import React from "react";
 import "./PaginaInicial.css";
 
 function PaginaInicial() {
-  // Verifica se existe um usuário logado do tipo 'cliente'
+
   const handleAgendarClick = () => {
     try {
       const usuarioSalvo = localStorage.getItem("usuario");
       const usuarioObj = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
       if (usuarioObj && usuarioObj.tipo === "cliente") {
-        // Se for cliente logado, vai para a seção de agendamentos
+    
         window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "agendamentos" }));
       } else {
-        // Caso contrário, abre o login
+   
         window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }));
       }
     } catch (err) {
-      // Em caso de erro ao ler o localStorage, cai para a tela de login
+  
       window.dispatchEvent(new CustomEvent("mostrarSecao", { detail: "login" }));
     }
   };
   return (
     <div className="pagina-inicial">
-      {/* Hero Section */}
+  
       <section className="hero-section">
         <div className="hero-content centralizado">
           <h1>Bem-vindo à HM Massoterapia</h1>
@@ -46,7 +46,7 @@ function PaginaInicial() {
         </div>
       </section>
 
-      {/* Seção de Serviços */}
+
       <section className="servicos-section">
         <h2>Nossos Serviços</h2>
         <div className="servicos-grid">
@@ -78,15 +78,12 @@ function PaginaInicial() {
         </div>
       </section>
 
-      {/* Seção de Benefícios - destaca diferenciais competitivos */}
       <section className="beneficios-section">
         <div className="beneficios-content">
-          {/* Título da seção */}
+
           <h2>Por que Escolher a HM Massoterapia?</h2>
           
-          {/* Lista de benefícios/diferenciais */}
           <div className="beneficios-lista">
-            {/* Benefício: Agendamento Online */}
             <div className="beneficio-item">
               <div className="beneficio-icon">📅</div>
               <div>
@@ -95,7 +92,6 @@ function PaginaInicial() {
               </div>
             </div>
             
-            {/* Benefício: Profissional Qualificado */}
             <div className="beneficio-item">
               <div className="beneficio-icon">👨‍⚕️</div>
               <div>
@@ -104,7 +100,6 @@ function PaginaInicial() {
               </div>
             </div>
             
-            {/* Benefício: Ambiente Seguro */}
             <div className="beneficio-item">
               <div className="beneficio-icon">🏥</div>
               <div>
@@ -113,7 +108,6 @@ function PaginaInicial() {
               </div>
             </div>
             
-            {/* Benefício: Atendimento Personalizado */}
             <div className="beneficio-item">
               <div className="beneficio-icon">💬</div>
               <div>
@@ -125,18 +119,13 @@ function PaginaInicial() {
         </div>
       </section>
 
-
-
-      {/* Call to Action - chamada final para ação */}
       <section className="cta-section">
         <div className="cta-content">
-          {/* Título da chamada para ação */}
+    
           <h2>Pronto para Cuidar do Seu Bem-Estar?</h2>
           
-          {/* Texto motivacional */}
           <p>Agende sua sessão agora e experimente os benefícios da massoterapia profissional.</p>
           
-          {/* Botão principal de CTA */}
           <button 
             className="btn-cta"
             onClick={handleAgendarClick}
@@ -149,5 +138,4 @@ function PaginaInicial() {
   );
 }
 
-// Exportação do componente
 export default PaginaInicial;

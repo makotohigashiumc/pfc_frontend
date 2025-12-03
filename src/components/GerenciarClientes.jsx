@@ -1,6 +1,3 @@
-// GerenciarClientes.jsx
-// Componente dedicado para o massoterapeuta gerenciar clientes
-
 import React, { useState, useEffect } from "react";
 
 function GerenciarClientes({ usuario, token }) {
@@ -8,7 +5,7 @@ function GerenciarClientes({ usuario, token }) {
   const [loadingClientes, setLoadingClientes] = useState(false);
   const [termoPesquisa, setTermoPesquisa] = useState("");
 
-  // Função para filtrar clientes baseado no termo de pesquisa
+
   const clientesFiltrados = clientes.filter(cliente => {
     const termo = termoPesquisa.toLowerCase();
     return (
@@ -18,7 +15,7 @@ function GerenciarClientes({ usuario, token }) {
     );
   });
 
-  // Função para buscar lista de clientes
+
   const buscarClientes = async () => {
     setLoadingClientes(true);
     try {
@@ -43,7 +40,7 @@ function GerenciarClientes({ usuario, token }) {
     }
   };
 
-  // Função para excluir cliente
+  
   const excluirCliente = async (clienteId, clienteNome) => {
     if (!window.confirm(`Tem certeza que deseja excluir permanentemente a conta do cliente "${clienteNome}"?\n\nEsta ação é irreversível e removerá todos os dados do cliente do sistema.`)) {
       return;
@@ -57,7 +54,7 @@ function GerenciarClientes({ usuario, token }) {
 
       if (resp.ok) {
         alert(`Cliente "${clienteNome}" excluído com sucesso!`);
-        // Remove o cliente da lista local
+
         setClientes(clientes.filter(c => c.id !== clienteId));
       } else {
         const err = await resp.json();
@@ -69,7 +66,6 @@ function GerenciarClientes({ usuario, token }) {
     }
   };
 
-  // Função para destacar texto da pesquisa
   const destacarTexto = (texto, termo) => {
     if (!termo) return texto;
     
@@ -87,7 +83,6 @@ function GerenciarClientes({ usuario, token }) {
     );
   };
 
-  // Atalho Ctrl+F para focar na pesquisa
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.ctrlKey && e.key === 'f') {
@@ -101,7 +96,6 @@ function GerenciarClientes({ usuario, token }) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Carregar clientes ao montar componente
   useEffect(() => {
     buscarClientes();
   }, []);
@@ -121,7 +115,6 @@ function GerenciarClientes({ usuario, token }) {
           Gerencie as contas dos clientes da clínica HM Massoterapia
         </p>
 
-        {/* Botão Atualizar Lista */}
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <button 
             type="button"
@@ -150,7 +143,6 @@ function GerenciarClientes({ usuario, token }) {
           </div>
         ) : (
           <>
-            {/* Barra de Pesquisa */}
             {clientes.length > 0 && (
               <div style={{ marginBottom: '20px' }}>
                 <label style={{ 
@@ -215,7 +207,6 @@ function GerenciarClientes({ usuario, token }) {
               </div>
             )}
             
-            {/* Lista de Clientes */}
             {clientes.length === 0 ? (
               <div style={{ 
                 textAlign: 'center', 
@@ -247,7 +238,6 @@ function GerenciarClientes({ usuario, token }) {
               </div>
             ) : (
               <>
-                {/* Contador de Resultados */}
                 <div style={{
                   fontSize: '14px',
                   color: '#4caf50',
@@ -261,7 +251,6 @@ function GerenciarClientes({ usuario, token }) {
                   📊 Exibindo {clientesFiltrados.length} de {clientes.length} cliente(s)
                 </div>
                 
-                {/* Lista Scrollable */}
                 <div style={{ 
                   maxHeight: '400px', 
                   overflowY: 'auto',
@@ -330,7 +319,6 @@ function GerenciarClientes({ usuario, token }) {
           </>
         )}
         
-        {/* Aviso de Segurança */}
         <div style={{ 
           marginTop: '25px',
           padding: '15px',
